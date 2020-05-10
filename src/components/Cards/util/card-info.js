@@ -1,5 +1,11 @@
-export const cardInfo = (amount) => ({
-  amount,
+export const cardInfo = ({
+  quantity,
+  lastUpdate,
+  confirmed,
+  deaths,
+  recovered
+}) => ({
+  amount: quantity,
   typography: {
     infected: [
       {
@@ -13,10 +19,17 @@ export const cardInfo = (amount) => ({
         styles: {
           variant: 'h5'
         },
-        value: 'Data'
+        value: confirmed ? confirmed.value : '',
+        cu_config: {
+          start: 0,
+          end: confirmed ? confirmed.value : '',
+          delay: 0.3,
+          separator: ',',
+          duration: 4.7
+        }
       },
       {
-        value: 'Date',
+        value: lastUpdate,
         styles: {
           color: 'textSecondary'
         }
@@ -34,19 +47,26 @@ export const cardInfo = (amount) => ({
           color: 'textSecondary',
           gutterBottom: true
         },
-        value: 'Infected'
+        value: 'Recovered'
       },
       {
         styles: {
           variant: 'h5'
         },
-        value: 'Data'
+        value: recovered ? recovered.value : '',
+        cu_config: {
+          start: 0,
+          end: recovered ? recovered.value : '',
+          delay: 0.3,
+          separator: ',',
+          duration: 2.5
+        }
       },
       {
         styles: {
           color: 'textSecondary'
         },
-        value: 'Date'
+        value: lastUpdate
       },
       {
         styles: {
@@ -61,19 +81,26 @@ export const cardInfo = (amount) => ({
           color: 'textSecondary',
           gutterBottom: true
         },
-        value: 'Infected'
+        value: 'Deceased'
       },
       {
         styles: {
           variant: 'h5'
         },
-        value: 'Data'
+        value: deaths ? deaths.value : '',
+        cu_config: {
+          start: 0,
+          end: deaths ? deaths.value : '',
+          delay: 0.3,
+          separator: ',',
+          duration: 1.35
+        }
       },
       {
         styles: {
           color: 'textSecondary'
         },
-        value: 'Date'
+        value: lastUpdate
       },
       {
         styles: {

@@ -4,9 +4,24 @@ import propTypes from 'prop-types';
 
 import classes from './Cards.module.css';
 import MuiCard from './Card/MuiCard';
+import { cardInfo } from './util/card-info';
 
-const Cards = ({ info: { amount, typography } }) => {
+const Cards = (props) => {
+  const {
+    data: { confirmed, deaths, lastUpdate, recovered },
+    quantity
+  } = props;
+
+  const { amount, typography } = cardInfo({
+    quantity,
+    confirmed,
+    deaths,
+    lastUpdate,
+    recovered
+  });
+
   const typographyKeys = Object.keys(typography);
+
   return (
     <div className={classes.Container}>
       <Grid container spacing={3} justify="center">
@@ -21,9 +36,11 @@ const Cards = ({ info: { amount, typography } }) => {
 };
 
 Cards.propTypes = {
-  info: propTypes.shape({
-    amount: propTypes.number.isRequired,
-    typography: propTypes.object.isRequired
+  data: propTypes.shape({
+    confirmed: propTypes.object,
+    deaths: propTypes.object,
+    recovered: propTypes.object,
+    lastUpdate: propTypes.string
   })
 };
 
