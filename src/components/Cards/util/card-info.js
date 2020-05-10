@@ -38,7 +38,7 @@ export const cardInfo = ({
         styles: {
           variant: 'body2'
         },
-        value: 'COVID-19 Active Cases'
+        value: 'Total number of active cases of COVID-19'
       }
     ],
     recovered: [

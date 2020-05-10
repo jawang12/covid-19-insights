@@ -1,22 +1,38 @@
 import React from 'react';
-import { Card, CardContent, Typography } from '@material-ui/core';
+import { Card, CardContent, Typography, makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import CountUp from 'react-countup';
 
-const MuiCard = ({ tConfig }) => {
+const useStyles = makeStyles({
+  card: {
+    margin: '0 2%'
+  },
+  infected: {
+    borderBottom: '10px solid #7e57c2b0'
+  },
+  recovered: {
+    borderBottom: '10px solid #17f71785'
+  },
+  deceased: {
+    borderBottom: '10px solid #f43636c9'
+  }
+});
+
+const MuiCard = ({ tConfig, type }) => {
+  const styles = useStyles();
   return (
-    <Card>
+    <Card className={[styles[type], styles.card].join(' ')}>
       <CardContent>
         {tConfig.map((config, i) => {
           if (typeof config.value === 'number') {
             return (
-              <Typography key={i} {...config.styles}>
+              <Typography align="center" key={i} {...config.styles}>
                 <CountUp {...config.cu_config} />
               </Typography>
             );
           }
           return (
-            <Typography key={i} {...config.styles}>
+            <Typography align="center" key={i} {...config.styles}>
               {config.value}
             </Typography>
           );
@@ -27,7 +43,8 @@ const MuiCard = ({ tConfig }) => {
 };
 
 MuiCard.propTypes = {
-  tConfig: PropTypes.array.isRequired
+  tConfig: PropTypes.array.isRequired,
+  type: PropTypes.string.isRequired
 };
 
 export default MuiCard;

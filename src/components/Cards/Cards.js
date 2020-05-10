@@ -26,8 +26,11 @@ const Cards = (props) => {
     <div className={classes.Container}>
       <Grid container spacing={3} justify="center">
         {Array.from({ length: amount }, (_, i) => (
-          <Grid item key={i}>
-            <MuiCard tConfig={typography[typographyKeys[i]]} />
+          <Grid item xs={12} md={3} key={i}>
+            <MuiCard
+              tConfig={typography[typographyKeys[i]]}
+              type={typographyKeys[i]}
+            />
           </Grid>
         ))}
       </Grid>

@@ -9,9 +9,16 @@ export const fetchData = async () => {
     } = await axios.get(url);
 
     lastUpdate = `
-    ${new Date(lastUpdate).toLocaleDateString()} ${new Date(
-      lastUpdate
-    ).toLocaleTimeString()}
+    ${new Date(lastUpdate).toLocaleDateString([], {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    })} ${new Date(lastUpdate).toLocaleTimeString([], {
+      timeZoneName: 'short',
+      hour: 'numeric',
+      minute: '2-digit'
+    })}
   `;
     return { confirmed, deaths, recovered, lastUpdate };
   } catch (err) {
