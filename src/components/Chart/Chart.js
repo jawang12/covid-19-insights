@@ -27,7 +27,9 @@ const Chart = () => {
   const LineGraph = dailyData ? (
     <Line
       data={{
-        labels: dailyData.map(({ reportDate }) => reportDate),
+        labels: dailyData.map(({ reportDate }) =>
+          new Date(reportDate).toLocaleDateString()
+        ),
         datasets: [
           {
             label: 'Infected',
@@ -51,9 +53,17 @@ const Chart = () => {
             label: (tooltipItem, data) => {
               const tooltipValue =
                 data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-              return numberWithCommas(tooltipValue);
+              const label = data.datasets[tooltipItem.datasetIndex].label;
+              return `Confirmed ${label}: ${numberWithCommas(tooltipValue)}`;
+              // return label;
+            },
+            title: (tooltipItem) => {
+              const title = tooltipItem[0].label;
+              return `${new Date(title).toDateString()}`;
             }
-          }
+          },
+          bodyAlign: 'center',
+          titleAlign: 'center'
         },
         scales: {
           yAxes: [
