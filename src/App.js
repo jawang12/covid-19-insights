@@ -16,7 +16,6 @@ export default class App extends Component {
   }
 
   render() {
-    // const cardContent = cardInfo(3);
     return (
       <div className={classes.Container}>
         <Cards quantity={3} data={this.state.data} />
