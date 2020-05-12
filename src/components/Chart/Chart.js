@@ -73,7 +73,24 @@ const Chart = () => {
                 callback: (value) => numberWithCommas(value)
               }
             }
+          ],
+          xAxes: [
+            {
+              gridLines: {
+                display: false
+              }
+            }
           ]
+        },
+        hover: {
+          onHover: (event, chartElement) => {
+            event.target.style.cursor = chartElement[0] ? 'pointer' : 'default';
+          }
+        },
+        legend: {
+          onHover: (event) => {
+            event.target.style.cursor = 'pointer';
+          }
         }
       }}
     />
