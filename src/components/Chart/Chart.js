@@ -19,7 +19,6 @@ const Chart = () => {
   useEffect(() => {
     (async () => {
       const data = await fetchDailyData();
-      console.log(data);
       setDailyData(data);
     })();
   }, []);
