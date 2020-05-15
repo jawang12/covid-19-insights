@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     borderBottom: '10px solid #17f71785'
   },
   deceased: {
-    borderBottom: '10px solid #f43636c9'
+    borderBottom: '10px solid rgba(244, 54, 54, .69)'
   }
 });
 

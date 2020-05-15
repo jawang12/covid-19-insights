@@ -26,7 +26,7 @@ export default class App extends Component {
       <div className={classes.Container}>
         <Cards quantity={3} data={this.state.data} />
         <CountryPicker handleCountryChange={this.handleCountryChange} />
-        <Chart />
+        <Chart country={this.state.country} data={this.state.data} />
       </div>
     );
   }

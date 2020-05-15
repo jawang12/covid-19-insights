@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fetchDailyData } from '../../api';
-import { Line } from 'react-chartjs-2';
+import { Line, HorizontalBar } from 'react-chartjs-2';
 
 import { Grid, makeStyles } from '@material-ui/core';
 import { numberWithCommas } from '../../utils/numberWithCommas';
@@ -12,7 +12,7 @@ const useStyles = makeStyles({
   }
 });
 
-const Chart = () => {
+const Chart = ({ country, data: { confirmed, deaths, recovered } }) => {
   const [dailyData, setDailyData] = useState(null);
   const styles = useStyles();
 
@@ -42,7 +42,7 @@ const Chart = () => {
             data: dailyData.map(({ deaths }) => deaths.total),
             fill: true,
             borderColor: 'transparent',
-            backgroundColor: '#f43636c9'
+            backgroundColor: 'rgba(244, 54, 54, .69)'
           }
         ]
       }}
@@ -54,7 +54,6 @@ const Chart = () => {
                 data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
               const label = data.datasets[tooltipItem.datasetIndex].label;
               return `Confirmed ${label}: ${numberWithCommas(tooltipValue)}`;
-              // return label;
             },
             title: (tooltipItem) => {
               const title = tooltipItem[0].label;
@@ -97,9 +96,58 @@ const Chart = () => {
     'loading'
   );
 
+  const HBarGraph = confirmed ? (
+    <HorizontalBar
+      type="horizontalBar"
+      data={{
+        labels: ['Infected', 'Recovered', 'Deceased'],
+        datasets: [
+          {
+            label: 'People',
+            backgroundColor: [
+              'rgba(126, 87, 194, .69)',
+              'rgba(23, 247, 23, .52)',
+              'rgba(244, 54, 54, .59)'
+            ],
+            borderWidth: 1.5,
+            hoverBackgroundColor: [
+              'rgba(126, 87, 194, .8)',
+              'rgba(23, 247, 23, .65)',
+              'rgba(244, 54, 54, .69)'
+            ],
+            hoverBorderColor: [
+              'rgba(126, 87, 194, 1)',
+              'rgba(30, 202, 30, .8)',
+              'rgba(244, 54, 54, .8)'
+            ],
+            data: [confirmed.value, recovered.value, deaths.value]
+          }
+        ]
+      }}
+      options={{
+        legend: {
+          display: false
+        },
+        title: {
+          display: true,
+          text: 'Current state of ' + country
+        },
+        scales: {
+          yAxes: [
+            {
+              gridLines: {
+                display: false
+              }
+            }
+          ]
+        }
+      }}
+    />
+  ) : null;
+
   return (
     <Grid container classes={{ container: styles.container }}>
-      {LineGraph}
+      {(country && HBarGraph) || LineGraph}
     </Grid>
   );
 };

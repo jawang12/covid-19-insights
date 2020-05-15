@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Select, FormControl, MenuItem, InputLabel } from '@material-ui/core';
+import { Select, FormControl, InputLabel, makeStyles } from '@material-ui/core';
 import { fetchCountryNames } from '../../api';
 
+const useStyles = makeStyles({
+  select: {
+    cursor: 'default'
+  }
+});
+
 const CountryPicker = ({ handleCountryChange }) => {
+  const classes = useStyles();
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
@@ -14,17 +21,20 @@ const CountryPicker = ({ handleCountryChange }) => {
 
   return (
     <FormControl variant="outlined" style={{ minWidth: '200px' }}>
-      <InputLabel id="country-label">Country</InputLabel>
+      <InputLabel htmlFor="country-label">Country</InputLabel>
       <Select
-        defaultValue=""
-        labelId="country-label"
+        native
         label="Country"
+        defaultValue=""
+        classes={{ select: classes.select }}
+        id="country-label"
         onChange={(e) => handleCountryChange(e.target.value)}
       >
+        <option value="Global">Global</option>
         {countries.map(({ name }) => (
-          <MenuItem key={name} value={name}>
+          <option key={name} style={{ cursor: 'grab' }} value={name}>
             {name}
-          </MenuItem>
+          </option>
         ))}
       </Select>
     </FormControl>
