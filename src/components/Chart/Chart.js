@@ -19,6 +19,8 @@ const Chart = ({ country, data: { confirmed, deaths, recovered } }) => {
     })();
   }, []);
 
+  console.log('render');
+
   const LineGraph = dailyData ? (
     <Line
       data={{
@@ -92,58 +94,59 @@ const Chart = ({ country, data: { confirmed, deaths, recovered } }) => {
     'loading'
   );
 
-  const HBarGraph = confirmed ? (
-    <HorizontalBar
-      type="horizontalBar"
-      data={{
-        labels: ['Infected', 'Recovered', 'Deceased'],
-        datasets: [
-          {
-            label: 'People',
-            backgroundColor: [
-              'rgba(126, 87, 194, .69)',
-              'rgba(23, 247, 23, .52)',
-              'rgba(244, 54, 54, .59)'
-            ],
-            borderWidth: 1.5,
-            hoverBackgroundColor: [
-              'rgba(126, 87, 194, .8)',
-              'rgba(23, 247, 23, .65)',
-              'rgba(244, 54, 54, .69)'
-            ],
-            hoverBorderColor: [
-              'rgba(126, 87, 194, 1)',
-              'rgba(30, 202, 30, .8)',
-              'rgba(244, 54, 54, .8)'
-            ],
-            data: [confirmed.value, recovered.value, deaths.value]
-          }
-        ]
-      }}
-      options={{
-        legend: {
-          display: false
-        },
-        title: {
-          display: true,
-          text: 'Current state of ' + country
-        },
-        scales: {
-          yAxes: [
+  const HBarGraph =
+    country && country !== 'Global' ? (
+      <HorizontalBar
+        type="horizontalBar"
+        data={{
+          labels: ['Infected', 'Recovered', 'Deceased'],
+          datasets: [
             {
-              gridLines: {
-                display: false
-              }
+              label: 'People',
+              backgroundColor: [
+                'rgba(126, 87, 194, .69)',
+                'rgba(23, 247, 23, .52)',
+                'rgba(244, 54, 54, .59)'
+              ],
+              borderWidth: 1.5,
+              hoverBackgroundColor: [
+                'rgba(126, 87, 194, .8)',
+                'rgba(23, 247, 23, .65)',
+                'rgba(244, 54, 54, .69)'
+              ],
+              hoverBorderColor: [
+                'rgba(126, 87, 194, 1)',
+                'rgba(30, 202, 30, .8)',
+                'rgba(244, 54, 54, .8)'
+              ],
+              data: [confirmed.value, recovered.value, deaths.value]
             }
           ]
-        }
-      }}
-    />
-  ) : null;
+        }}
+        options={{
+          legend: {
+            display: false
+          },
+          title: {
+            display: true,
+            text: 'Current state of ' + country
+          },
+          scales: {
+            yAxes: [
+              {
+                gridLines: {
+                  display: false
+                }
+              }
+            ]
+          }
+        }}
+      />
+    ) : null;
 
   return (
     <Grid container style={{ width: tabletOrSmaller ? '100%' : '80%' }}>
-      {(country && HBarGraph) || LineGraph}
+      {HBarGraph || LineGraph}
     </Grid>
   );
 };

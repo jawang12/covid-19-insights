@@ -23,7 +23,6 @@ class App extends Component {
   };
 
   render() {
-    // const tabletOrSmaller = useMediaQuery('(max-width: 770px)');
     const tabletOrSmaller = ['xs', 'sm', 'tablet'].includes(this.props.width);
     return (
       <div
@@ -33,7 +32,6 @@ class App extends Component {
         <Cards quantity={3} data={this.state.data} />
         <CountryPicker handleCountryChange={this.handleCountryChange} />
         <Chart country={this.state.country} data={this.state.data} />
-        <h2>{tabletOrSmaller}</h2>
       </div>
     );
   }
