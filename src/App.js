@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 import { Cards, CountryPicker, Chart } from './components';
 import classes from './App.module.css';
 import { fetchData } from './api';
+import { withWidth } from '@material-ui/core';
 
-export default class App extends Component {
+class App extends Component {
   state = {
     data: {},
     country: ''
@@ -22,12 +23,20 @@ export default class App extends Component {
   };
 
   render() {
+    // const tabletOrSmaller = useMediaQuery('(max-width: 770px)');
+    const tabletOrSmaller = ['xs', 'sm', 'tablet'].includes(this.props.width);
     return (
-      <div className={classes.Container}>
+      <div
+        className={classes.Container}
+        style={{ margin: tabletOrSmaller ? '0 5%' : 0 }}
+      >
         <Cards quantity={3} data={this.state.data} />
         <CountryPicker handleCountryChange={this.handleCountryChange} />
         <Chart country={this.state.country} data={this.state.data} />
+        <h2>{tabletOrSmaller}</h2>
       </div>
     );
   }
 }
+
+export default withWidth()(App);

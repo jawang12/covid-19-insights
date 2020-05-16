@@ -2,19 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { fetchDailyData } from '../../api';
 import { Line, HorizontalBar } from 'react-chartjs-2';
 
-import { Grid, makeStyles } from '@material-ui/core';
+import { Grid, useMediaQuery } from '@material-ui/core';
 import { numberWithCommas } from '../../utils/numberWithCommas';
-
-const useStyles = makeStyles({
-  container: {
-    display: 'flex',
-    width: '80%'
-  }
-});
 
 const Chart = ({ country, data: { confirmed, deaths, recovered } }) => {
   const [dailyData, setDailyData] = useState(null);
-  const styles = useStyles();
+  //M-UI breakpoints.down() does not work on custom breakpoints. will send pull request
+  const tabletOrSmaller = useMediaQuery('(max-width: 770px)');
+
+  // console.log(tabletOrSmaller, theme.breakpoints.width('tablet'));
 
   useEffect(() => {
     (async () => {
@@ -146,7 +142,7 @@ const Chart = ({ country, data: { confirmed, deaths, recovered } }) => {
   ) : null;
 
   return (
-    <Grid container classes={{ container: styles.container }}>
+    <Grid container style={{ width: tabletOrSmaller ? '100%' : '80%' }}>
       {(country && HBarGraph) || LineGraph}
     </Grid>
   );

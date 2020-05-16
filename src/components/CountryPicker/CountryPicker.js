@@ -5,6 +5,10 @@ import { fetchCountryNames } from '../../api';
 const useStyles = makeStyles({
   select: {
     cursor: 'default'
+  },
+  formControl: {
+    minWidth: '20%',
+    margin: '35px 0'
   }
 });
 
@@ -20,7 +24,7 @@ const CountryPicker = ({ handleCountryChange }) => {
   }, []);
 
   return (
-    <FormControl variant="outlined" style={{ minWidth: '200px' }}>
+    <FormControl variant="outlined" className={classes.formControl}>
       <InputLabel htmlFor="country-label">Country</InputLabel>
       <Select
         native
