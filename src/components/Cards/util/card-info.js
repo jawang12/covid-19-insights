@@ -12,7 +12,11 @@ export const cardInfo = ({
         value: 'Infected',
         styles: {
           color: 'textSecondary',
-          gutterBottom: true
+          variant: 'h6',
+          gutterBottom: true,
+          style: {
+            letterSpacing: '1.5px'
+          }
         }
       },
       {
@@ -45,7 +49,11 @@ export const cardInfo = ({
       {
         styles: {
           color: 'textSecondary',
-          gutterBottom: true
+          variant: 'h6',
+          gutterBottom: true,
+          style: {
+            letterSpacing: '1.5px'
+          }
         },
         value: 'Recovered'
       },
@@ -79,7 +87,11 @@ export const cardInfo = ({
       {
         styles: {
           color: 'textSecondary',
-          gutterBottom: true
+          variant: 'h6',
+          gutterBottom: true,
+          style: {
+            letterSpacing: '1.5px'
+          }
         },
         value: 'Deceased'
       },
