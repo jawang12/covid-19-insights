@@ -4,8 +4,13 @@ import { Line, HorizontalBar } from 'react-chartjs-2';
 
 import { Grid, useMediaQuery } from '@material-ui/core';
 import { numberWithCommas } from '../../utils/numberWithCommas';
+import { Chart } from 'react-chartjs-2';
 
-const Chart = ({ country, data: { confirmed, deaths, recovered } }) => {
+Chart.Legend.prototype.afterFit = function () {
+  this.height = this.height + 10;
+};
+
+const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
   const [dailyData, setDailyData] = useState(null);
   //M-UI breakpoints.down() does not work on custom breakpoints. will send pull request
   const tabletOrSmaller = useMediaQuery('(max-width: 770px)');
@@ -59,7 +64,16 @@ const Chart = ({ country, data: { confirmed, deaths, recovered } }) => {
             }
           },
           bodyAlign: 'center',
-          titleAlign: 'center'
+          titleAlign: 'center',
+          titleFontSize: 16,
+          bodyFontSize: 14,
+          xPadding: 10,
+          yPadding: 10
+        },
+        layout: {
+          padding: {
+            top: 30
+          }
         },
         scales: {
           yAxes: [
@@ -151,4 +165,4 @@ const Chart = ({ country, data: { confirmed, deaths, recovered } }) => {
   );
 };
 
-export default Chart;
+export default DataChart;

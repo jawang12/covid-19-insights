@@ -2,15 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { Select, FormControl, InputLabel, makeStyles } from '@material-ui/core';
 import { fetchCountryNames } from '../../api';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   select: {
     cursor: 'default'
   },
   formControl: {
     minWidth: '20%',
-    margin: '35px 0'
+    margin: '35px 0',
+    [theme.breakpoints.down('xs')]: {
+      width: '45%'
+    }
   }
-});
+}));
 
 const CountryPicker = ({ handleCountryChange }) => {
   const classes = useStyles();

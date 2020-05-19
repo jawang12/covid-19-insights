@@ -7,8 +7,7 @@ export const numberWithCommas = (n) => {
     if (!index) {
       output = numStr[i] + ',' + output;
     } else {
-      output =
-        numStr.slice(i, i + 1) + ',' + numStr.slice(i + 1, i + 3) + output;
+      output = numStr[i] + ',' + numStr.slice(i + 1, i + 3) + output;
     }
     // handles leftover numbers. if we reach i === 0, then there are none leftover
     index = i ? i : null;
