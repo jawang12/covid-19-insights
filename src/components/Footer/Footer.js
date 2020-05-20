@@ -5,11 +5,18 @@ import { faReact } from '@fortawesome/free-brands-svg-icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: '150px',
+    marginTop: '130px',
     alignItems: 'center',
     padding: '0 5%',
+    textAlign: 'center',
     height: '90px',
-    backgroundColor: theme.palette.primary.main
+    backgroundColor: theme.palette.primary.main,
+    [theme.breakpoints.down(theme.breakpoints.values.tablet)]: {
+      flexDirection: 'column',
+      height: '100%',
+      paddingTop: '10px',
+      paddingBottom: '10px'
+    }
   },
   textBox1: {
     paddingTop: '7px'
@@ -66,7 +73,7 @@ const Footer = () => {
   return (
     <Grid container className={classes.root}>
       <Grid item className={classes.textBox1}>
-        <Typography className={[classes.text, classes.footerInline].join(' ')}>
+        <Typography className={classes.text} display="inline">
           Data is provided by{' '}
         </Typography>
         <a
@@ -75,11 +82,11 @@ const Footer = () => {
           rel="noopener noreferrer"
           href="https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6"
         >
-          <Typography className={classes.footerInline}>
+          <Typography display="inline">
             Johns Hopkins University CSSE
           </Typography>
         </a>{' '}
-        <Typography className={[classes.footerInline, classes.text].join(' ')}>
+        <Typography display="inline" className={classes.text}>
           via{' '}
         </Typography>
         <a
@@ -88,9 +95,7 @@ const Footer = () => {
           rel="noopener noreferrer"
           href="https://github.com/mathdroid/covid-19-api"
         >
-          <Typography className={classes.footerInline}>
-            mathdroid API
-          </Typography>
+          <Typography display="inline">mathdroid API</Typography>
         </a>
       </Grid>
       <Grid item className={classes.item2}>
