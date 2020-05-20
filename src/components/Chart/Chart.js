@@ -24,8 +24,6 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
     })();
   }, []);
 
-  console.log('render', dailyData);
-
   const LineGraph = dailyData ? (
     <Line
       data={{

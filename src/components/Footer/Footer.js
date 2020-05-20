@@ -38,6 +38,23 @@ const useStyles = makeStyles((theme) => ({
   anchor: {
     textDecoration: 'none',
     opacity: 0.4,
+    position: 'relative',
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      width: '100%',
+      height: '2px',
+      bottom: 0,
+      left: 0,
+      backgroundColor: '#fff',
+      visibility: 'hidden',
+      transform: 'scaleX(0)',
+      transition: 'all .3s ease-in-out 0s'
+    },
+    '&:hover::before': {
+      visibility: 'visible',
+      transform: 'scaleX(1)'
+    },
     '&:any-link': {
       color: '#fff'
     }
