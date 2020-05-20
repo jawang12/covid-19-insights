@@ -4,6 +4,7 @@ import { Cards, CountryPicker, Chart } from './components';
 import classes from './App.module.css';
 import { fetchData } from './api';
 import { withWidth } from '@material-ui/core';
+import Footer from './components/Footer/Footer';
 
 class App extends Component {
   state = {
@@ -25,14 +26,19 @@ class App extends Component {
   render() {
     const tabletOrSmaller = ['xs', 'sm', 'tablet'].includes(this.props.width);
     return (
-      <div
-        className={classes.Container}
-        style={{ margin: tabletOrSmaller ? '0 5%' : 0 }}
-      >
-        <Cards quantity={3} data={this.state.data} />
-        <CountryPicker handleCountryChange={this.handleCountryChange} />
-        <Chart country={this.state.country} data={this.state.data} />
-      </div>
+      <>
+        <div
+          className={classes.Container}
+          style={{ margin: tabletOrSmaller ? '0 5%' : 0 }}
+        >
+          <Cards quantity={3} data={this.state.data} />
+          <CountryPicker handleCountryChange={this.handleCountryChange} />
+          <Chart country={this.state.country} data={this.state.data} />
+        </div>
+        <footer>
+          <Footer />
+        </footer>
+      </>
     );
   }
 }

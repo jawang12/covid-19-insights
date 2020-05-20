@@ -22,7 +22,7 @@ const useStyles = makeStyles({
       opacity: 0,
       boxShadow:
         '0 2px 1px rgba(0,0,0,0.09), 0 4px 2px rgba(0,0,0,0.09), 0 8px 4px rgba(0,0,0,0.09), 0 16px 8px rgba(0,0,0,0.09), 0 32px 16px rgba(0,0,0,0.09)',
-      transition: 'all 0.3s ease-in-out'
+      transition: 'all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1)'
     },
     // '&:hover': {
     //   transform: 'scale(1.1)'

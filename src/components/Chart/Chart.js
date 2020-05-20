@@ -24,7 +24,7 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
     })();
   }, []);
 
-  console.log('render');
+  console.log('render', dailyData);
 
   const LineGraph = dailyData ? (
     <Line
@@ -66,6 +66,7 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
           bodyAlign: 'center',
           titleAlign: 'center',
           titleFontSize: 16,
+          titleMarginBottom: 8,
           bodyFontSize: 14,
           xPadding: 10,
           yPadding: 10
@@ -153,6 +154,15 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
                 }
               }
             ]
+          },
+          tooltips: {
+            bodyAlign: 'center',
+            titleAlign: 'center',
+            titleFontSize: 16,
+            titleMarginBottom: 8,
+            bodyFontSize: 14,
+            xPadding: 10,
+            yPadding: 10
           }
         }}
       />
