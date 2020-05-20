@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Cards, CountryPicker, Chart } from './components';
 import classes from './App.module.css';
 import { fetchData } from './api';
-import { withWidth, Grid } from '@material-ui/core';
+import { withWidth } from '@material-ui/core';
 import Footer from './components/Footer/Footer';
 
 class App extends Component {
@@ -26,7 +26,7 @@ class App extends Component {
   render() {
     const tabletOrSmaller = ['xs', 'sm', 'tablet'].includes(this.props.width);
     return (
-      <Grid>
+      <>
         <div
           className={classes.Container}
           style={{ margin: tabletOrSmaller ? '0 5%' : 0 }}
@@ -38,7 +38,7 @@ class App extends Component {
         <footer>
           <Footer />
         </footer>
-      </Grid>
+      </>
     );
   }
 }

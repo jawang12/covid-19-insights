@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { fetchDailyData } from '../../api';
 import { Line, HorizontalBar } from 'react-chartjs-2';
 
-import { Grid, useMediaQuery, Card, makeStyles } from '@material-ui/core';
+import { Grid, Card, makeStyles } from '@material-ui/core';
 import { numberWithCommas } from '../../utils/numberWithCommas';
 import { Chart } from 'react-chartjs-2';
 
@@ -10,22 +10,28 @@ Chart.Legend.prototype.afterFit = function () {
   this.height = this.height + 10;
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
+  root: {
+    height: '600px',
+    [theme.breakpoints.down(theme.breakpoints.width('tablet'))]: {
+      height: '400px'
+    }
+  },
   gridItem: {
-    flexGrow: 1,
+    // flexGrow: 1,
     padding: '0 16px 22px 16px',
     boxShadow:
       '0 1px 1px rgba(0,0,0,0.15), 0 2px 2px rgba(0,0,0,0.15), 0 4px 4px rgba(0,0,0,0.15), 0 8px 8px rgba(0,0,0,0.15)'
   }
-});
+}));
 
 const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
   const [dailyData, setDailyData] = useState(null);
-  //M-UI breakpoints.down() does not work on custom breakpoints. will send pull request
-  const tabletOrSmaller = useMediaQuery('(max-width: 770px)');
   const classes = useStyles();
+  /* M-UI breakpoints.down() does not work on custom breakpoint keys. will send pull request
+  const tabletOrSmaller = useMediaQuery('(max-width: 770px)'); 
 
-  // console.log(tabletOrSmaller, theme.breakpoints.width('tablet'));
+  console.log(theme.breakpoints.width('tablet')) returns 770; */
 
   useEffect(() => {
     (async () => {
@@ -35,7 +41,14 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
   }, []);
 
   const LineGraph = dailyData ? (
-    <Grid item component={Card} className={classes.gridItem}>
+    <Grid
+      item
+      component={Card}
+      xs={12}
+      md={10}
+      lg={8}
+      className={[classes.gridItem, classes.root].join(' ')}
+    >
       <Line
         data={{
           labels: dailyData.map(({ reportDate }) => {
@@ -125,7 +138,9 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
             onHover: (event) => {
               event.target.style.cursor = 'pointer';
             }
-          }
+          },
+          responsive: true,
+          maintainAspectRatio: false
         }}
       />
     </Grid>
@@ -135,7 +150,14 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
 
   const HBarGraph =
     country && country !== 'Global' ? (
-      <Grid item component={Card} className={classes.gridItem}>
+      <Grid
+        item
+        component={Card}
+        xs={12}
+        md={10}
+        lg={8}
+        className={[classes.gridItem].join(' ')}
+      >
         <HorizontalBar
           type="horizontalBar"
           data={{
@@ -211,7 +233,7 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
     ) : null;
 
   return (
-    <Grid container style={{ width: tabletOrSmaller ? '100%' : '80%' }}>
+    <Grid container className={!HBarGraph ? classes.root : ''} justify="center">
       {HBarGraph || LineGraph}
     </Grid>
   );
