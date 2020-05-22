@@ -7,7 +7,7 @@ export const theme = createMuiTheme({
     values: {
       xs: 0,
       sm: 600,
-      tablet: 770,
+      tablet: 768,
       md: 960,
       laptop: 1024,
       lg: 1280,

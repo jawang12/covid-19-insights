@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     height: '600px',
     [theme.breakpoints.down(theme.breakpoints.width('tablet'))]: {
-      height: '400px'
+      height: '460px'
     }
   },
   gridItem: {
