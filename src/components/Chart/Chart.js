@@ -191,7 +191,9 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
             },
             title: {
               display: true,
-              text: 'Current state of ' + country
+              padding: 10,
+              fontSize: 14,
+              text: country + ' - Total'
             },
             scales: {
               yAxes: [
