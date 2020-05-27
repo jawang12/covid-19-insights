@@ -5,6 +5,7 @@ import { Line, HorizontalBar } from 'react-chartjs-2';
 import { Grid, Card, makeStyles } from '@material-ui/core';
 import { numberWithCommas } from '../../utils/numberWithCommas';
 import { Chart } from 'react-chartjs-2';
+import 'chartjs-plugin-crosshair';
 
 Chart.Legend.prototype.afterFit = function () {
   this.height = this.height + 10;
@@ -18,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   gridItem: {
-    // flexGrow: 1,
     padding: '0 16px 22px 16px',
     boxShadow:
       '0 1px 1px rgba(0,0,0,0.15), 0 2px 2px rgba(0,0,0,0.15), 0 4px 4px rgba(0,0,0,0.15), 0 8px 8px rgba(0,0,0,0.15)'
@@ -36,9 +36,31 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
   useEffect(() => {
     (async () => {
       const data = await fetchDailyData();
-      setDailyData(data);
+      setDailyData({
+        confirmed: generateLGDataset(data, 'Infected', '#7e57c2b0'),
+        deceased: generateLGDataset(data, 'Deceased', 'rgba(244, 54, 54, .69)')
+      });
     })();
   }, []);
+
+  function generateLGDataset(data, label, color) {
+    const dataArray = data.map(({ deaths, confirmed, reportDate }) => ({
+      x: new Date(reportDate),
+      y: label === 'Infected' ? confirmed.total : deaths.total
+    }));
+
+    const dataset = {
+      backgroundColor: color,
+      borderColor: color,
+      label: label,
+      data: dataArray,
+      fill: false, //1
+      pointRadius: 0,
+      lineTension: 0,
+      interpolate: true
+    };
+    return dataset;
+  }
 
   const LineGraph = dailyData ? (
     <Grid
@@ -51,26 +73,7 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
     >
       <Line
         data={{
-          labels: dailyData.map(({ reportDate }) => {
-            const date = new Date(reportDate).toLocaleDateString();
-            return date.slice(0, date.length - 2);
-          }),
-          datasets: [
-            {
-              label: 'Infected',
-              data: dailyData.map(({ confirmed }) => confirmed.total),
-              fill: '1',
-              borderColor: 'transparent',
-              backgroundColor: '#7e57c2b0'
-            },
-            {
-              label: 'Deceased',
-              data: dailyData.map(({ deaths }) => deaths.total),
-              fill: true,
-              borderColor: 'transparent',
-              backgroundColor: 'rgba(244, 54, 54, .69)'
-            }
-          ]
+          datasets: [dailyData.confirmed, dailyData.deceased]
         }}
         options={{
           title: {
@@ -80,17 +83,17 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
             padding: 5
           },
           tooltips: {
+            mode: 'interpolate',
+            intersect: false,
             callbacks: {
               label: (tooltipItem, data) => {
-                const tooltipValue =
-                  data.datasets[tooltipItem.datasetIndex].data[
-                    tooltipItem.index
-                  ];
                 const label = data.datasets[tooltipItem.datasetIndex].label;
-                return `Confirmed ${label}: ${numberWithCommas(tooltipValue)}`;
+                return `Confirmed ${label}: ${numberWithCommas(
+                  tooltipItem.yLabel.toFixed(0)
+                )}`;
               },
               title: (tooltipItem) => {
-                const title = tooltipItem[0].label;
+                const title = tooltipItem[0].xLabel;
                 return `${new Date(title).toDateString()}`;
               }
             },
@@ -102,6 +105,7 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
             xPadding: 10,
             yPadding: 10
           },
+
           layout: {
             padding: {
               top: 30
@@ -122,7 +126,12 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
             xAxes: [
               {
                 gridLines: {
-                  display: false
+                  borderDash: [10, 10]
+                },
+                type: 'time',
+                ticks: {
+                  autoSkip: true,
+                  maxTicksLimit: 15
                 }
               }
             ]
@@ -137,6 +146,13 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
           legend: {
             onHover: (event) => {
               event.target.style.cursor = 'pointer';
+            }
+          },
+          plugins: {
+            crosshair: {
+              sync: {
+                enabled: false // enable trace line syncing with other charts
+              }
             }
           },
           responsive: true,
@@ -242,3 +258,124 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
 };
 
 export default DataChart;
+
+/*
+<Line
+data={{
+  labels: dailyData.map(({ reportDate }) => reportDate),
+  datasets: [
+    {
+      label: 'Infected',
+      data: dailyData.map(({ confirmed }) => confirmed.total), 
+        data: dailyData.map(({ reportDate, deaths }) => ({
+                x: reportDate,
+                y: deaths.total
+              })),
+      fill: false, //1
+      borderColor: '#7e57c2b0',
+      backgroundColor: '#7e57c2b0',
+      pointRadius: 2,
+      showLine: true,
+      lineTension: 0,
+      interpolate: true
+    },
+    {
+      label: 'Deceased',
+      data: dailyData.map(({ deaths }) => deaths.total),
+      fill: false, //true
+      borderColor: 'rgba(244, 54, 54, .69)',
+      backgroundColor: 'rgba(244, 54, 54, .69)',
+      pointRadius: 2,
+      showLine: true,
+      lineTension: 0,
+      interpolate: true
+    }
+  ]
+}}
+options={{
+  title: {
+    display: true,
+    text: 'Global - Daily',
+    fontSize: 14,
+    padding: 5
+  },
+  tooltips: {
+    mode: 'interpolate',
+    intersect: false,
+    callbacks: {
+      label: (tooltipItem, data) => {
+        const tooltipValue =
+          data.datasets[tooltipItem.datasetIndex].data[
+            tooltipItem.index
+          ];
+        const label = data.datasets[tooltipItem.datasetIndex].label;
+        return `Confirmed ${label}: ${numberWithCommas(tooltipValue)}`;
+      },
+      title: (tooltipItem) => {
+        const title = tooltipItem[0].label;
+        return `${new Date(title).toDateString()}`;
+      }
+    },
+    bodyAlign: 'center',
+    titleAlign: 'center',
+    titleFontSize: 16,
+    titleMarginBottom: 8,
+    bodyFontSize: 14,
+    xPadding: 10,
+    yPadding: 10
+  },
+
+  layout: {
+    padding: {
+      top: 30
+    }
+  },
+  scales: {
+    yAxes: [
+      {
+        ticks: {
+          beginAtZero: true,
+          callback: (value) => numberWithCommas(value)
+        }
+        // gridLines: {
+        //   borderDash: [10, 10]
+        // }
+      }
+    ],
+    xAxes: [
+      {
+        // gridLines: {
+        //   display: false
+        // },
+        type: 'time',
+        ticks: {
+          autoSkip: true,
+          maxTicksLimit: 20
+        }
+      }
+    ]
+  },
+  // hover: {
+  //   onHover: (event, chartElement) => {
+  //     event.target.style.cursor = chartElement[0]
+  //       ? 'pointer'
+  //       : 'default';
+  //   }
+  // },
+  // legend: {
+  //   onHover: (event) => {
+  //     event.target.style.cursor = 'pointer';
+  //   }
+  // },
+  plugins: {
+    crosshair: {
+      sync: {
+        enabled: false, // enable trace line syncing with other charts
+        suppressTooltips: false
+      }
+    }
+  },
+  responsive: true,
+  maintainAspectRatio: false
+}}
+/> */
