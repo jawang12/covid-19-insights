@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchDailyData } from '../../api';
 import { Line, HorizontalBar } from 'react-chartjs-2';
-import { Grid, Card, makeStyles } from '@material-ui/core';
+import { Grid, Card, makeStyles, useMediaQuery } from '@material-ui/core';
 import { numberWithCommas } from '../../utils/numberWithCommas';
 import { Chart } from 'react-chartjs-2';
 import 'chartjs-plugin-crosshair';
@@ -28,10 +28,13 @@ const useStyles = makeStyles((theme) => ({
 const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
   const [dailyData, setDailyData] = useState(null);
   const classes = useStyles();
-  /* M-UI breakpoints.down() does not work on custom breakpoint keys. will send pull request
-  const tabletOrSmaller = useMediaQuery('(max-width: 770px)'); 
+  // address bug where zero line on y axis would protrude into graph
+  const zeroLineDash = useMediaQuery('(max-width: 496px)');
 
-  console.log(theme.breakpoints.width('tablet')) returns 770; */
+  /* M-UI breakpoints.down() does not work on custom breakpoint keys. will send pull request
+  const tabletOrSmaller = useMediaQuery('(max-width: 768px)'); 
+
+  console.log(theme.breakpoints.width('tablet')) returns 768; */
 
   useEffect(() => {
     (async () => {
@@ -60,7 +63,6 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
       component={Card}
       xs={12}
       md={10}
-      lg={8}
       className={[classes.gridItem, classes.root].join(' ')}
     >
       <Line
@@ -101,7 +103,7 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
           layout: {
             padding: {
               top: 30,
-              right: 15
+              right: 10 //15
             }
           },
           scales: {
@@ -112,7 +114,9 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
                   callback: (value) => numberWithCommas(value)
                 },
                 gridLines: {
-                  borderDash: [8, 3]
+                  borderDash: [8, 3],
+                  zeroLineWidth: 1.5,
+                  zeroLineColor: 'rgba(0, 0, 0, 0.3)'
                 }
               }
             ],
@@ -120,8 +124,10 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
               {
                 gridLines: {
                   borderDash: [8, 3],
+                  // zeroLineWidth: zeroLineDash ? 1 : 1.5,
                   zeroLineColor: 'rgba(0, 0, 0, 0.1)',
-                  zeroLineBorderDash: [8, 3]
+
+                  zeroLineBorderDash: zeroLineDash ? [8, 3] : false
                 },
                 type: 'time',
                 ticks: {
@@ -148,6 +154,9 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
             crosshair: {
               sync: {
                 enabled: false // enable trace line syncing with other charts
+              },
+              zoom: {
+                enabled: false
               }
             }
           },

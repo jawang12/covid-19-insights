@@ -5,6 +5,7 @@ import { Footer } from './components';
 const App = () => {
   return (
     <>
+      <header></header>
       <main>
         <GlobalData />
       </main>

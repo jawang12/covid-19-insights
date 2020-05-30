@@ -22,8 +22,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: '7px'
   },
   item2: {
-    flexGrow: 1,
-    justifySelf: 'flex-end'
+    flexGrow: 1
   },
   textBox2: {
     paddingBottom: '7px'
@@ -32,9 +31,6 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     cursor: 'default',
     opacity: 0.6
-  },
-  footerInline: {
-    display: 'inline'
   },
   glow: {
     transition: 'opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1)',

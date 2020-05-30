@@ -10,8 +10,12 @@ export const generateLGDataset = (data, label, color) => {
     label: label,
     data: dataArray,
     fill: label === 'Infected' ? 1 : true,
-    pointRadius: 0,
     lineTension: 0,
+    borderWidth: 4,
+    // pointRadius: [...new Array(128).fill(0), 3],
+    pointRadius: 0,
+    // pointBorderWidth: 3,
+    // pointHitRadius: 6,
     interpolate: true
   };
   return dataset;
