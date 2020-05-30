@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { fetchDailyData } from '../../api';
 import { Line, HorizontalBar } from 'react-chartjs-2';
-
 import { Grid, Card, makeStyles } from '@material-ui/core';
 import { numberWithCommas } from '../../utils/numberWithCommas';
 import { Chart } from 'react-chartjs-2';
 import 'chartjs-plugin-crosshair';
+import { generateLGDataset } from '../../utils/generateLGDataset';
 
 Chart.Legend.prototype.afterFit = function () {
   this.height = this.height + 10;
@@ -41,26 +41,18 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
         deceased: generateLGDataset(data, 'Deceased', 'rgba(244, 54, 54, .69)')
       });
     })();
+
+    fetch(
+      'https://raw.githubusercontent.com/jawang12/covid-data-ext/master/data/data.json'
+    )
+      .then((result) => {
+        return result.json();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => console.error(err));
   }, []);
-
-  function generateLGDataset(data, label, color) {
-    const dataArray = data.map(({ deaths, confirmed, reportDate }) => ({
-      x: new Date(reportDate),
-      y: label === 'Infected' ? confirmed.total : deaths.total
-    }));
-
-    const dataset = {
-      backgroundColor: color,
-      borderColor: color,
-      label: label,
-      data: dataArray,
-      fill: false, //1
-      pointRadius: 0,
-      lineTension: 0,
-      interpolate: true
-    };
-    return dataset;
-  }
 
   const LineGraph = dailyData ? (
     <Grid
@@ -108,30 +100,34 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
 
           layout: {
             padding: {
-              top: 30
+              top: 30,
+              right: 15
             }
           },
           scales: {
             yAxes: [
               {
                 ticks: {
-                  beginAtZero: true,
+                  beginAtZero: false,
                   callback: (value) => numberWithCommas(value)
                 },
                 gridLines: {
-                  borderDash: [10, 10]
+                  borderDash: [8, 3]
                 }
               }
             ],
             xAxes: [
               {
                 gridLines: {
-                  borderDash: [10, 10]
+                  borderDash: [8, 3],
+                  zeroLineColor: 'rgba(0, 0, 0, 0.1)',
+                  zeroLineBorderDash: [8, 3]
                 },
                 type: 'time',
                 ticks: {
                   autoSkip: true,
-                  maxTicksLimit: 15
+                  maxTicksLimit: 18,
+                  minRotation: 25
                 }
               }
             ]
@@ -175,7 +171,6 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
         className={[classes.gridItem].join(' ')}
       >
         <HorizontalBar
-          type="horizontalBar"
           data={{
             labels: ['Infected', 'Recovered', 'Deceased'],
             datasets: [
@@ -244,6 +239,9 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
                   )}`;
                 }
               }
+            },
+            plugins: {
+              crosshair: false
             }
           }}
         />
@@ -258,124 +256,3 @@ const DataChart = ({ country, data: { confirmed, deaths, recovered } }) => {
 };
 
 export default DataChart;
-
-/*
-<Line
-data={{
-  labels: dailyData.map(({ reportDate }) => reportDate),
-  datasets: [
-    {
-      label: 'Infected',
-      data: dailyData.map(({ confirmed }) => confirmed.total), 
-        data: dailyData.map(({ reportDate, deaths }) => ({
-                x: reportDate,
-                y: deaths.total
-              })),
-      fill: false, //1
-      borderColor: '#7e57c2b0',
-      backgroundColor: '#7e57c2b0',
-      pointRadius: 2,
-      showLine: true,
-      lineTension: 0,
-      interpolate: true
-    },
-    {
-      label: 'Deceased',
-      data: dailyData.map(({ deaths }) => deaths.total),
-      fill: false, //true
-      borderColor: 'rgba(244, 54, 54, .69)',
-      backgroundColor: 'rgba(244, 54, 54, .69)',
-      pointRadius: 2,
-      showLine: true,
-      lineTension: 0,
-      interpolate: true
-    }
-  ]
-}}
-options={{
-  title: {
-    display: true,
-    text: 'Global - Daily',
-    fontSize: 14,
-    padding: 5
-  },
-  tooltips: {
-    mode: 'interpolate',
-    intersect: false,
-    callbacks: {
-      label: (tooltipItem, data) => {
-        const tooltipValue =
-          data.datasets[tooltipItem.datasetIndex].data[
-            tooltipItem.index
-          ];
-        const label = data.datasets[tooltipItem.datasetIndex].label;
-        return `Confirmed ${label}: ${numberWithCommas(tooltipValue)}`;
-      },
-      title: (tooltipItem) => {
-        const title = tooltipItem[0].label;
-        return `${new Date(title).toDateString()}`;
-      }
-    },
-    bodyAlign: 'center',
-    titleAlign: 'center',
-    titleFontSize: 16,
-    titleMarginBottom: 8,
-    bodyFontSize: 14,
-    xPadding: 10,
-    yPadding: 10
-  },
-
-  layout: {
-    padding: {
-      top: 30
-    }
-  },
-  scales: {
-    yAxes: [
-      {
-        ticks: {
-          beginAtZero: true,
-          callback: (value) => numberWithCommas(value)
-        }
-        // gridLines: {
-        //   borderDash: [10, 10]
-        // }
-      }
-    ],
-    xAxes: [
-      {
-        // gridLines: {
-        //   display: false
-        // },
-        type: 'time',
-        ticks: {
-          autoSkip: true,
-          maxTicksLimit: 20
-        }
-      }
-    ]
-  },
-  // hover: {
-  //   onHover: (event, chartElement) => {
-  //     event.target.style.cursor = chartElement[0]
-  //       ? 'pointer'
-  //       : 'default';
-  //   }
-  // },
-  // legend: {
-  //   onHover: (event) => {
-  //     event.target.style.cursor = 'pointer';
-  //   }
-  // },
-  plugins: {
-    crosshair: {
-      sync: {
-        enabled: false, // enable trace line syncing with other charts
-        suppressTooltips: false
-      }
-    }
-  },
-  responsive: true,
-  maintainAspectRatio: false
-}}
-/> */

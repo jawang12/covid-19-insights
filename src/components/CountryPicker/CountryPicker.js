@@ -29,6 +29,7 @@ const CountryPicker = ({ handleCountryChange }) => {
   useEffect(() => {
     (async function () {
       const countriesFromAPI = await fetchCountryNames();
+      console.log(countriesFromAPI.length);
       setCountries((countries) => countries.concat(countriesFromAPI));
     })();
   }, []);
