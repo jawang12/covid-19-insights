@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import { Cards, CountryPicker, Chart } from '../../components';
-import { fetchData, fetchDailyReports } from '../../api';
+import { fetchDailyReports } from '../../api';
 import { makeStyles } from '@material-ui/core';
 import { orderByCountry } from '../../utils/orderByCountry';
 
@@ -21,11 +21,11 @@ const useStyles = makeStyles((theme) => ({
 
 const GlobalData = () => {
   const [data, setData] = useState({
-    dailyReports: [],
+    dailyReports: {},
+    currentDailyReport: [],
     card: {},
     countryListData: {}
   });
-  const [country, setCountry] = useState('');
   const styles = useStyles();
 
   useEffect(() => {
@@ -34,18 +34,24 @@ const GlobalData = () => {
       const dailyReports = orderByCountry(reports);
       console.log(dailyReports, 'daily reports');
       setData({
-        dailyReports: dailyReports.Global,
+        dailyReports,
+        currentDailyReport: dailyReports.Global,
         card: dailyReports.Global[dailyReports.Global.length - 1],
         countryListData: dailyReports
       });
     })();
   }, []);
 
-  const handleCountryChange = async (country) => {
-    const data = await fetchData(country);
-    setData(data);
-    setCountry(country);
-  };
+  const handleCountryChange = useCallback((country) => {
+    setData((previousData) => ({
+      ...previousData,
+      card:
+        previousData.dailyReports[country][
+          previousData.dailyReports[country].length - 1
+        ],
+      currentDailyReport: previousData.dailyReports[country]
+    }));
+  }, []);
 
   return (
     <div className={styles.root}>
@@ -54,12 +60,7 @@ const GlobalData = () => {
         countryListData={data.countryListData}
         handleCountryChange={handleCountryChange}
       />
-      <Chart
-        country={country}
-        data={data.dailyReports}
-        size="full"
-        type="line"
-      />
+      <Chart data={data.currentDailyReport} size="full" type="line" />
     </div>
   );
 };

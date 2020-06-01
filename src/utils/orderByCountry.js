@@ -27,8 +27,7 @@ function sanitizeCountries(dailyReports) {
       dailyReports[country].length > 49 ||
       country === 'KM' ||
       country === 'LS' ||
-      country === 'TJ' ||
-      country === 'global'
+      country === 'TJ'
     ) {
       sanitizedReports[country] = dailyReports[country];
     }
