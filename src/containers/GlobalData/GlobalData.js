@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 import { Cards, CountryPicker, Chart } from '../../components';
-import { fetchData } from '../../api';
+import { fetchData, fetchDailyReports } from '../../api';
 import { makeStyles } from '@material-ui/core';
+import { orderByCountry } from '../../utils/orderByCountry';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,15 +20,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GlobalData = () => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState({
+    dailyReports: [],
+    card: {},
+    countryListData: {}
+  });
   const [country, setCountry] = useState('');
   const styles = useStyles();
 
   useEffect(() => {
     (async function () {
-      const data = await fetchData();
-      console.log(data, 'data from mathdroid');
-      setData(data);
+      const reports = await fetchDailyReports();
+      const dailyReports = orderByCountry(reports);
+      console.log(dailyReports, 'daily reports');
+      setData({
+        dailyReports: dailyReports.Global,
+        card: dailyReports.Global[dailyReports.Global.length - 1],
+        countryListData: dailyReports
+      });
     })();
   }, []);
 
@@ -39,9 +49,17 @@ const GlobalData = () => {
 
   return (
     <div className={styles.root}>
-      <Cards quantity={3} data={data} />
-      <CountryPicker handleCountryChange={handleCountryChange} />
-      <Chart country={country} data={data} />
+      <Cards quantity={3} data={data.card} />
+      <CountryPicker
+        countryListData={data.countryListData}
+        handleCountryChange={handleCountryChange}
+      />
+      <Chart
+        country={country}
+        data={data.dailyReports}
+        size="full"
+        type="line"
+      />
     </div>
   );
 };

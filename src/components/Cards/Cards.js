@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 const Cards = (props) => {
   const styles = useStyles();
   const {
-    data: { confirmed, deaths, lastUpdate, recovered },
+    data: { confirmed, deaths, updatedDate, recovered },
     quantity
   } = props;
 
@@ -31,7 +31,7 @@ const Cards = (props) => {
     quantity,
     confirmed,
     deaths,
-    lastUpdate,
+    updatedDate,
     recovered
   });
 
@@ -55,10 +55,10 @@ const Cards = (props) => {
 
 Cards.propTypes = {
   data: propTypes.shape({
-    confirmed: propTypes.object,
-    deaths: propTypes.object,
-    recovered: propTypes.object,
-    lastUpdate: propTypes.string
+    confirmed: propTypes.number,
+    deaths: propTypes.number,
+    recovered: propTypes.number,
+    updatedDate: propTypes.string
   })
 };
 

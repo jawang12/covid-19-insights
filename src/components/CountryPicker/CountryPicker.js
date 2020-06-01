@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { makeStyles, TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { fetchCountryNames } from '../../api';
 import { countryToFlag } from '../../utils/countryToFlag';
+import { sanitizeCountryCode } from '../../utils/sanitizeCountryCode';
 
 const useStyles = makeStyles((theme) => ({
   autoComplete: {
@@ -22,37 +22,38 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const CountryPicker = ({ handleCountryChange }) => {
+const CountryPicker = ({ countryListData, handleCountryChange }) => {
   const classes = useStyles();
-  const [countries, setCountries] = useState([{ name: 'Global' }]);
+  const countryList = [];
 
-  useEffect(() => {
-    (async function () {
-      const countriesFromAPI = await fetchCountryNames();
-      console.log(countriesFromAPI.length);
-      setCountries((countries) => countries.concat(countriesFromAPI));
-    })();
-  }, []);
-
+  if (countryListData.Global) {
+    for (let country in countryListData) {
+      countryList.push({
+        country: countryListData[country][0].country,
+        countryCode: sanitizeCountryCode(
+          countryListData[country][0].countryCode
+        )
+      });
+    }
+    countryList.sort((a, b) => (a.country > b.country ? 1 : -1));
+  }
+  console.log('countryList', countryList);
   return (
     <Autocomplete
       id="country-picker"
-      options={countries}
+      options={countryList}
       classes={{ option: classes.option, root: classes.autoComplete }}
       autoHighlight
       autoComplete
       includeInputInList
       onChange={(e, newValue) => {
         if (!newValue) return;
-        handleCountryChange(newValue.name);
+        handleCountryChange(newValue.country);
       }}
-      getOptionLabel={(option) =>
-        option.name === 'US' ? 'United States' : option.name
-      }
+      getOptionLabel={(option) => option.country}
       renderOption={(option) => (
         <>
-          <span>{countryToFlag(option.iso2)}</span>{' '}
-          {`${option.name === 'US' ? 'United States' : option.name}`}
+          <span>{countryToFlag(option.countryCode)}</span> {`${option.country}`}
         </>
       )}
       renderInput={(params) => (

@@ -1,6 +1,6 @@
 export const cardInfo = ({
   quantity,
-  lastUpdate,
+  updatedDate,
   confirmed,
   deaths,
   recovered
@@ -23,17 +23,17 @@ export const cardInfo = ({
         styles: {
           variant: 'h5'
         },
-        value: confirmed ? confirmed.value : '',
+        value: confirmed,
         cu_config: {
           start: 0,
-          end: confirmed ? confirmed.value : '',
+          end: confirmed,
           delay: 0.3,
           separator: ',',
           duration: 4.7
         }
       },
       {
-        value: lastUpdate,
+        value: updatedDate,
         styles: {
           color: 'textSecondary'
         }
@@ -61,10 +61,10 @@ export const cardInfo = ({
         styles: {
           variant: 'h5'
         },
-        value: recovered ? recovered.value : '',
+        value: recovered,
         cu_config: {
           start: 0,
-          end: recovered ? recovered.value : '',
+          end: recovered,
           delay: 0.3,
           separator: ',',
           duration: 2.5
@@ -74,7 +74,7 @@ export const cardInfo = ({
         styles: {
           color: 'textSecondary'
         },
-        value: lastUpdate
+        value: updatedDate
       },
       {
         styles: {
@@ -99,10 +99,10 @@ export const cardInfo = ({
         styles: {
           variant: 'h5'
         },
-        value: deaths ? deaths.value : '',
+        value: deaths,
         cu_config: {
           start: 0,
-          end: deaths ? deaths.value : '',
+          end: deaths,
           delay: 0.3,
           separator: ',',
           duration: 1.35
@@ -112,7 +112,7 @@ export const cardInfo = ({
         styles: {
           color: 'textSecondary'
         },
-        value: lastUpdate
+        value: updatedDate
       },
       {
         styles: {

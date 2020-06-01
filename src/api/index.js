@@ -49,3 +49,16 @@ export const fetchCountryNames = async () => {
     console.error(err);
   }
 };
+
+export const fetchDailyReports = async () => {
+  try {
+    const {
+      data: { dailyReports }
+    } = await axios.get(
+      'https://raw.githubusercontent.com/jawang12/covid-data-ext/master/data/data.json'
+    );
+    return dailyReports;
+  } catch (err) {
+    console.error(err);
+  }
+};
