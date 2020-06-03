@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
   autoComplete: {
     minWidth: '20%',
     width: 300,
-    margin: '35px 0',
+    margin: '5px 0',
     [theme.breakpoints.down('xs')]: {
       width: '45%'
     }
@@ -63,17 +63,20 @@ const CountryPicker = ({ countryListData, handleCountryChange }) => {
           {`${option.countryCode === 'GB' ? 'United Kingdom' : option.country}`}
         </>
       )}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Country"
-          variant="outlined"
-          inputProps={{
-            ...params.inputProps,
-            autoComplete: 'new-password'
-          }}
-        />
-      )}
+      renderInput={(params) => {
+        const inputProps = params.inputProps;
+        inputProps.autoComplete = 'off';
+        return (
+          <TextField
+            {...params}
+            label="Country"
+            variant="outlined"
+            inputProps={{
+              ...params.inputProps
+            }}
+          />
+        );
+      }}
     />
   );
 };

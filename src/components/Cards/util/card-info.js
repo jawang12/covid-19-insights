@@ -1,9 +1,9 @@
 export const cardInfo = ({
   quantity,
   updatedDate,
-  confirmed,
-  deaths,
-  recovered
+  confirmedGrowth,
+  deathsGrowth,
+  recoveredGrowth
 }) => ({
   amount: quantity,
   typography: {
@@ -23,10 +23,10 @@ export const cardInfo = ({
         styles: {
           variant: 'h5'
         },
-        value: confirmed,
+        value: confirmedGrowth,
         cu_config: {
           start: 0,
-          end: confirmed,
+          end: confirmedGrowth,
           delay: 0.3,
           separator: ',',
           duration: 4.7
@@ -61,10 +61,10 @@ export const cardInfo = ({
         styles: {
           variant: 'h5'
         },
-        value: recovered,
+        value: recoveredGrowth,
         cu_config: {
           start: 0,
-          end: recovered,
+          end: recoveredGrowth,
           delay: 0.3,
           separator: ',',
           duration: 2.5
@@ -99,10 +99,10 @@ export const cardInfo = ({
         styles: {
           variant: 'h5'
         },
-        value: deaths,
+        value: deathsGrowth,
         cu_config: {
           start: 0,
-          end: deaths,
+          end: deathsGrowth,
           delay: 0.3,
           separator: ',',
           duration: 1.35

@@ -7,7 +7,7 @@ const useStyles = (size) =>
   makeStyles((theme) => {
     const styles = {
       root: {
-        height: '400px',
+        height: '420px',
         [theme.breakpoints.down(theme.breakpoints.width('tablet'))]: {
           height: '360px'
         },
@@ -16,7 +16,7 @@ const useStyles = (size) =>
           '0 1px 1px rgba(0,0,0,0.15), 0 2px 2px rgba(0,0,0,0.15), 0 4px 4px rgba(0,0,0,0.15), 0 8px 8px rgba(0,0,0,0.15)'
       }
     };
-    if (size === 'half') {
+    if (size < 10) {
       styles.root[theme.breakpoints.up('md')] = {
         flexBasis: '40.666667%'
       };
@@ -39,7 +39,7 @@ const BarGraph = ({
       component={Card}
       xs={12}
       sm={6}
-      md={size === 'full' ? 10 : 5}
+      md={size}
       className={classes.root}
     >
       <Bar
@@ -74,7 +74,7 @@ const BarGraph = ({
           },
           title: {
             display: true,
-            padding: 10,
+            padding: 5,
             fontSize: 14,
             text: country + ' - Total'
           },
@@ -82,7 +82,8 @@ const BarGraph = ({
             xAxes: [
               {
                 gridLines: {
-                  display: false
+                  // display: false,
+                  borderDash: [8, 3]
                 }
               }
             ],
@@ -91,6 +92,9 @@ const BarGraph = ({
                 ticks: {
                   beginAtZero: true,
                   callback: (value) => numberWithCommas(value)
+                },
+                gridLines: {
+                  borderDash: [8, 3]
                 }
               }
             ]
@@ -110,6 +114,11 @@ const BarGraph = ({
                   tooltipItem.value
                 )}`;
               }
+            }
+          },
+          layout: {
+            padding: {
+              top: 30
             }
           },
           plugins: {

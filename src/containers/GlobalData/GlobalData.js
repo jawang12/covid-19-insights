@@ -4,6 +4,7 @@ import { Cards, CountryPicker, Chart } from '../../components';
 import { fetchDailyReports } from '../../api';
 import { makeStyles, Grid } from '@material-ui/core';
 import { orderByCountry } from '../../utils/orderByCountry';
+import { graphConfig } from './utils/graph-config';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,6 +63,21 @@ const GlobalData = () => {
     }));
   }, []);
 
+  const dailyReportsOptions = {
+    a: 'confirmed',
+    b: 'recovered',
+    c: 'deaths'
+  };
+
+  const dailyGrowthOptions = {
+    a: 'confirmedGrowth',
+    b: 'recoveredGrowth',
+    c: 'deathsGrowth'
+  };
+
+  const dailyGrowthConfig = graphConfig('560px', '460px', 'Growth Per Day', 18);
+  const dailyReportsConfig = graphConfig('420px', '360px', 'Daily (AGG)', 10);
+
   return (
     <div className={styles.root}>
       <Cards quantity={3} data={data.card} />
@@ -74,12 +90,24 @@ const GlobalData = () => {
         justify="center"
         classes={{ container: styles.container }}
       >
-        <Chart data={data.currentDailyReport} size="full" type="line" />
+        <Chart
+          data={data.currentDailyReport}
+          size={10}
+          type="line"
+          options={dailyGrowthOptions}
+          config={dailyGrowthConfig}
+        />
       </Grid>
       <Grid container justify="center" className={styles.container}>
-        <Chart data={data.currentDailyReport} size="half" type="bar" />
+        <Chart data={data.currentDailyReport} size={5} type="bar" />
         <div className={styles.divider}></div>
-        <Chart data={data.currentDailyReport} size="half" type="bar" />
+        <Chart
+          data={data.currentDailyReport}
+          size={5}
+          type="line"
+          options={dailyReportsOptions}
+          config={dailyReportsConfig}
+        />
       </Grid>
     </div>
   );

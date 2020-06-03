@@ -9,20 +9,32 @@ Chart.Legend.prototype.afterFit = function () {
   this.height = this.height + 10;
 };
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    height: '600px',
-    [theme.breakpoints.down(theme.breakpoints.width('tablet'))]: {
-      height: '460px'
-    },
-    padding: '0 16px 22px 16px',
-    boxShadow:
-      '0 1px 1px rgba(0,0,0,0.15), 0 2px 2px rgba(0,0,0,0.15), 0 4px 4px rgba(0,0,0,0.15), 0 8px 8px rgba(0,0,0,0.15)'
-  }
-}));
+const useStyles = (size, config) =>
+  makeStyles((theme) => {
+    const styles = {
+      root: {
+        height: config.heightLarge,
+        [theme.breakpoints.down(theme.breakpoints.width('tablet'))]: {
+          height: config.heightSmall
+        },
+        padding: '0 16px 22px 16px',
+        boxShadow:
+          '0 1px 1px rgba(0,0,0,0.15), 0 2px 2px rgba(0,0,0,0.15), 0 4px 4px rgba(0,0,0,0.15), 0 8px 8px rgba(0,0,0,0.15)'
+      }
+    };
+    if (size < 10) {
+      styles.root[theme.breakpoints.up('md')] = {
+        flexBasis: '40.666667%'
+      };
+      styles.root[theme.breakpoints.only('sm')] = {
+        flexBasis: '49%'
+      };
+    }
+    return styles;
+  });
 
-const LineGraph = ({ country, dailyData, size }) => {
-  const classes = useStyles();
+const LineGraph = ({ country, dailyData, size, config }) => {
+  const classes = useStyles(size, config)();
   // address bug where zero line on y axis would protrude into graph
   const zeroLineDash = useMediaQuery('(max-width: 496px)');
 
@@ -34,13 +46,7 @@ const LineGraph = ({ country, dailyData, size }) => {
   console.log(dailyData);
 
   return (
-    <Grid
-      item
-      component={Card}
-      xs={12}
-      md={size === 'full' ? 10 : 6}
-      className={classes.root}
-    >
+    <Grid item component={Card} xs={12} md={size} className={classes.root}>
       <Line
         data={{
           datasets: [
@@ -52,7 +58,7 @@ const LineGraph = ({ country, dailyData, size }) => {
         options={{
           title: {
             display: true,
-            text: `${country} - Daily`,
+            text: `${country} - ${config.title}`,
             fontSize: 14,
             padding: 5
           },
@@ -79,7 +85,6 @@ const LineGraph = ({ country, dailyData, size }) => {
             xPadding: 10,
             yPadding: 10
           },
-
           layout: {
             padding: {
               top: 30,
@@ -112,7 +117,7 @@ const LineGraph = ({ country, dailyData, size }) => {
                 type: 'time',
                 ticks: {
                   autoSkip: true,
-                  maxTicksLimit: 18,
+                  maxTicksLimit: config.maxTicksLimit,
                   minRotation: 25
                 }
               }
