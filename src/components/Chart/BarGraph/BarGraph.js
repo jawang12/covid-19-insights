@@ -3,29 +3,42 @@ import { Bar } from 'react-chartjs-2';
 import { Grid, Card, makeStyles } from '@material-ui/core';
 import { numberWithCommas } from '../../../utils/numberWithCommas';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    height: '400px',
-    [theme.breakpoints.down(theme.breakpoints.width('tablet'))]: {
-      height: '360px'
-    },
-    padding: '0 16px 22px 16px',
-    boxShadow:
-      '0 1px 1px rgba(0,0,0,0.15), 0 2px 2px rgba(0,0,0,0.15), 0 4px 4px rgba(0,0,0,0.15), 0 8px 8px rgba(0,0,0,0.15)'
-  }
-}));
+const useStyles = (size) =>
+  makeStyles((theme) => {
+    const styles = {
+      root: {
+        height: '400px',
+        [theme.breakpoints.down(theme.breakpoints.width('tablet'))]: {
+          height: '360px'
+        },
+        padding: '0 16px 22px 16px',
+        boxShadow:
+          '0 1px 1px rgba(0,0,0,0.15), 0 2px 2px rgba(0,0,0,0.15), 0 4px 4px rgba(0,0,0,0.15), 0 8px 8px rgba(0,0,0,0.15)'
+      }
+    };
+    if (size === 'half') {
+      styles.root[theme.breakpoints.up('md')] = {
+        flexBasis: '40.666667%'
+      };
+      styles.root[theme.breakpoints.only('sm')] = {
+        flexBasis: '49%'
+      };
+    }
+    return styles;
+  });
 
 const BarGraph = ({
   country,
   size,
   totalData: { confirmed, deaths, recovered }
 }) => {
-  const classes = useStyles();
+  const classes = useStyles(size)();
   return (
     <Grid
       item
       component={Card}
       xs={12}
+      sm={6}
       md={size === 'full' ? 10 : 5}
       className={classes.root}
     >

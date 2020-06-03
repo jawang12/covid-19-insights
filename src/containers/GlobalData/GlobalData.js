@@ -19,6 +19,12 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     marginTop: 25
+  },
+  divider: {
+    flexBasis: '2%',
+    [theme.breakpoints.down('sm')]: {
+      height: '25px'
+    }
   }
 }));
 
@@ -70,12 +76,9 @@ const GlobalData = () => {
       >
         <Chart data={data.currentDailyReport} size="full" type="line" />
       </Grid>
-      <Grid
-        container
-        justify="center"
-        classes={{ container: styles.container }}
-      >
+      <Grid container justify="center" className={styles.container}>
         <Chart data={data.currentDailyReport} size="half" type="bar" />
+        <div className={styles.divider}></div>
         <Chart data={data.currentDailyReport} size="half" type="bar" />
       </Grid>
     </div>
