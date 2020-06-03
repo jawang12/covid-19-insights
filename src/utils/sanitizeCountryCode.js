@@ -18,6 +18,8 @@ export const sanitizeCountryCode = (code) => {
       return 'LA';
     case 'MS Zaandam':
       return null;
+    case 'Global':
+      return null;
     case 'West Bank and Gaza':
       return 'PS';
     default:

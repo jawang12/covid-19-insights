@@ -14,9 +14,7 @@ const useStyles = makeStyles((theme) => ({
     height: '600px',
     [theme.breakpoints.down(theme.breakpoints.width('tablet'))]: {
       height: '460px'
-    }
-  },
-  gridItem: {
+    },
     padding: '0 16px 22px 16px',
     boxShadow:
       '0 1px 1px rgba(0,0,0,0.15), 0 2px 2px rgba(0,0,0,0.15), 0 4px 4px rgba(0,0,0,0.15), 0 8px 8px rgba(0,0,0,0.15)'
@@ -40,8 +38,8 @@ const LineGraph = ({ country, dailyData, size }) => {
       item
       component={Card}
       xs={12}
-      md={10}
-      className={[classes.gridItem, classes.root].join(' ')}
+      md={size === 'full' ? 10 : 6}
+      className={classes.root}
     >
       <Line
         data={{
@@ -54,7 +52,7 @@ const LineGraph = ({ country, dailyData, size }) => {
         options={{
           title: {
             display: true,
-            text: 'Global - Daily',
+            text: `${country} - Daily`,
             fontSize: 14,
             padding: 5
           },

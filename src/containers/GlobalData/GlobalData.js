@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 
 import { Cards, CountryPicker, Chart } from '../../components';
 import { fetchDailyReports } from '../../api';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Grid } from '@material-ui/core';
 import { orderByCountry } from '../../utils/orderByCountry';
 
 const useStyles = makeStyles((theme) => ({
@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('md')]: {
       padding: '0 2%'
     }
+  },
+  container: {
+    marginTop: 25
   }
 }));
 
@@ -60,7 +63,21 @@ const GlobalData = () => {
         countryListData={data.countryListData}
         handleCountryChange={handleCountryChange}
       />
-      <Chart data={data.currentDailyReport} size="full" type="line" />
+      <Grid
+        container
+        justify="center"
+        classes={{ container: styles.container }}
+      >
+        <Chart data={data.currentDailyReport} size="full" type="line" />
+      </Grid>
+      <Grid
+        container
+        justify="center"
+        classes={{ container: styles.container }}
+      >
+        <Chart data={data.currentDailyReport} size="half" type="bar" />
+        <Chart data={data.currentDailyReport} size="half" type="bar" />
+      </Grid>
     </div>
   );
 };

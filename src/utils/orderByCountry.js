@@ -3,6 +3,7 @@ export const orderByCountry = (arr) => {
     (dailyReport, current) => {
       if (!current.errorStatus) {
         current.country = 'Global';
+        current.countryCode = 'Global';
         dailyReport.Global.push(current);
 
         current.countries.forEach((country) => {

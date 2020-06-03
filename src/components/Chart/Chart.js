@@ -1,35 +1,36 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
 import { generateLGDataset } from '../../utils/generateLGDataset';
 import LineGraph from './LineGraph/LineGraph';
-import BarGraph from './Bar/Bar';
+import BarGraph from './BarGraph/BarGraph';
 
-const DataChart = ({ country, type, size, data }) => {
-  // const [dailyData, setDailyData] = useState(null);
-  let dailyData = null;
-  // useEffect(() => {
-  if (data.length > 1) {
-    dailyData = {
-      confirmed: generateLGDataset(data, 'Infected', '#7e57c2b0'),
-      recovered: generateLGDataset(data, 'Recovered', '#17f71785'),
-      deceased: generateLGDataset(data, 'Deceased', 'rgba(244, 54, 54, .69)')
-    };
+const DataChart = ({ type, size, data }) => {
+  let chartData;
+  let country;
+  if (data.length) {
+    if (type === 'line') {
+      chartData = {
+        confirmed: generateLGDataset(data, 'Infected', '#7e57c2b0'),
+        recovered: generateLGDataset(data, 'Recovered', '#17f71785'),
+        deceased: generateLGDataset(data, 'Deceased', 'rgba(244, 54, 54, .69)')
+      };
+    } else {
+      chartData = { ...data[data.length - 1] };
+    }
+    country = data[0].country;
   }
-  // }, [data]);
 
   const graph =
     type === 'line'
-      ? (dailyData && (
-          <LineGraph dailyData={dailyData} size={size} country={country} />
+      ? (chartData && (
+          <LineGraph dailyData={chartData} size={size} country={country} />
         )) ||
         'LOADDDD'
-      : (dailyData && <BarGraph />) || 'loading';
+      : (chartData && (
+          <BarGraph totalData={chartData} country={country} size={size} />
+        )) ||
+        'loading';
 
-  return (
-    <Grid container justify="center">
-      {graph}
-    </Grid>
-  );
+  return graph;
 };
 
 export default DataChart;
