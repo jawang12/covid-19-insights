@@ -34,7 +34,8 @@ const GlobalData = () => {
     dailyReports: {},
     currentDailyReport: [],
     card: {},
-    countryListData: {}
+    countryListData: {},
+    filter: ''
   });
   const styles = useStyles();
 
@@ -47,7 +48,8 @@ const GlobalData = () => {
         dailyReports,
         currentDailyReport: dailyReports.Global,
         card: dailyReports.Global[dailyReports.Global.length - 1],
-        countryListData: dailyReports
+        countryListData: dailyReports,
+        filter: 'total'
       });
     })();
   }, []);
@@ -63,20 +65,34 @@ const GlobalData = () => {
     }));
   }, []);
 
+  const handleToggle = (value) =>
+    setData((previousData) => ({
+      ...previousData,
+      filter: value
+    }));
+
   const dailyReportsOptions = {
     a: 'confirmed',
     b: 'recovered',
-    c: 'deaths'
+    c: 'deaths',
+    filter: data.filter
   };
 
   const dailyGrowthOptions = {
     a: 'confirmedGrowth',
     b: 'recoveredGrowth',
-    c: 'deathsGrowth'
+    c: 'deathsGrowth',
+    filter: data.filter
   };
 
-  const dailyGrowthConfig = graphConfig('560px', '460px', 'Growth Per Day', 18);
-  const dailyReportsConfig = graphConfig('420px', '360px', 'Daily (AGG)', 10);
+  const dailyGrowthConfig = graphConfig(
+    '570px',
+    '470px',
+    'Growth Per Day',
+    18,
+    true
+  );
+  const dailyReportsConfig = graphConfig('430px', '370px', 'Daily (AGG)', 10);
 
   return (
     <div className={styles.root}>
@@ -96,6 +112,7 @@ const GlobalData = () => {
           type="line"
           options={dailyGrowthOptions}
           config={dailyGrowthConfig}
+          toggle={handleToggle}
         />
       </Grid>
       <Grid container justify="center" className={styles.container}>

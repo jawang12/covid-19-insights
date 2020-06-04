@@ -1,5 +1,5 @@
 export const generateLGDataset = (data, label, color, options) => {
-  const dataArray = data.map(({ updatedDate, ...dailyInfo }) => ({
+  let dataArray = data.map(({ updatedDate, ...dailyInfo }) => ({
     x: new Date(updatedDate.slice(5) + '-2020'),
     y:
       label === 'Infected'
@@ -8,6 +8,14 @@ export const generateLGDataset = (data, label, color, options) => {
         ? dailyInfo[options.b]
         : dailyInfo[options.c]
   }));
+
+  if (options.filter === 'week') {
+    dataArray = dataArray.slice(-16);
+  }
+
+  if (options.filter === 'month') {
+    dataArray = dataArray.slice(-31);
+  }
 
   const dataset = {
     backgroundColor: color,

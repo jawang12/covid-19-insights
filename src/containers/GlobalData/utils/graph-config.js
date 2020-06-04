@@ -2,10 +2,12 @@ export const graphConfig = (
   heightLarge,
   heightSmall,
   title,
-  maxTicksLimit
+  maxTicksLimit,
+  filter
 ) => ({
   heightLarge,
   heightSmall,
   title,
-  maxTicksLimit
+  maxTicksLimit,
+  filter
 });

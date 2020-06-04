@@ -7,9 +7,9 @@ const useStyles = (size) =>
   makeStyles((theme) => {
     const styles = {
       root: {
-        height: '420px',
+        height: '430px',
         [theme.breakpoints.down(theme.breakpoints.width('tablet'))]: {
-          height: '360px'
+          height: '370px'
         },
         padding: '0 16px 22px 16px',
         boxShadow:

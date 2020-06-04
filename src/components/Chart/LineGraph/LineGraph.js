@@ -4,6 +4,7 @@ import { Grid, Card, makeStyles, useMediaQuery } from '@material-ui/core';
 import { numberWithCommas } from '../../../utils/numberWithCommas';
 import { Chart } from 'react-chartjs-2';
 import 'chartjs-plugin-crosshair';
+import GPDtoggle from '../../ButtonGroup/GPDtoggle';
 
 Chart.Legend.prototype.afterFit = function () {
   this.height = this.height + 10;
@@ -17,6 +18,7 @@ const useStyles = (size, config) =>
         [theme.breakpoints.down(theme.breakpoints.width('tablet'))]: {
           height: config.heightSmall
         },
+        position: 'relative',
         padding: '0 16px 22px 16px',
         boxShadow:
           '0 1px 1px rgba(0,0,0,0.15), 0 2px 2px rgba(0,0,0,0.15), 0 4px 4px rgba(0,0,0,0.15), 0 8px 8px rgba(0,0,0,0.15)'
@@ -33,7 +35,7 @@ const useStyles = (size, config) =>
     return styles;
   });
 
-const LineGraph = ({ country, dailyData, size, config }) => {
+const LineGraph = ({ country, dailyData, size, config, toggle, tState }) => {
   const classes = useStyles(size, config)();
   // address bug where zero line on y axis would protrude into graph
   const zeroLineDash = useMediaQuery('(max-width: 496px)');
@@ -47,6 +49,7 @@ const LineGraph = ({ country, dailyData, size, config }) => {
 
   return (
     <Grid item component={Card} xs={12} md={size} className={classes.root}>
+      {config.filter && <GPDtoggle tState={tState} toggle={toggle} />}
       <Line
         data={{
           datasets: [
@@ -87,7 +90,7 @@ const LineGraph = ({ country, dailyData, size, config }) => {
           },
           layout: {
             padding: {
-              top: 30,
+              top: config.filter ? 40 : 30,
               right: 10 //15
             }
           },

@@ -3,7 +3,7 @@ import { generateLGDataset } from '../../utils/generateLGDataset';
 import LineGraph from './LineGraph/LineGraph';
 import BarGraph from './BarGraph/BarGraph';
 
-const DataChart = ({ type, size, data, options, config }) => {
+const DataChart = ({ type, size, data, options, config, toggle }) => {
   let chartData;
   let country;
   if (data.length) {
@@ -32,6 +32,8 @@ const DataChart = ({ type, size, data, options, config }) => {
             size={size}
             country={country}
             config={config}
+            toggle={toggle}
+            tState={options.filter}
           />
         )) ||
         'LOADDDD'
