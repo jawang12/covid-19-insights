@@ -45,8 +45,6 @@ const LineGraph = ({ country, dailyData, size, config, toggle, tState }) => {
 
   console.log(theme.breakpoints.width('tablet')) returns 768; */
 
-  console.log(dailyData);
-
   return (
     <Grid item component={Card} xs={12} md={size} className={classes.root}>
       {config.filter && <GPDtoggle tState={tState} toggle={toggle} />}

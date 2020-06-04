@@ -1,11 +1,18 @@
 import React from 'react';
-import { Card, CardContent, Typography, makeStyles } from '@material-ui/core';
+import {
+  Card,
+  CardContent,
+  Typography,
+  makeStyles,
+  Divider,
+  Box
+} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import CountUp from 'react-countup';
 
 const useStyles = makeStyles({
   card: {
-    margin: '0 2%',
+    borderRadius: 12,
     position: 'relative',
     overflow: 'visible',
     boxShadow:
@@ -31,7 +38,9 @@ const useStyles = makeStyles({
       opacity: 1
     }
   },
-
+  box: {
+    flexBasis: '50%'
+  },
   infected: {
     borderBottom: '10px solid #7e57c2b0'
   },
@@ -43,6 +52,58 @@ const useStyles = makeStyles({
   }
 });
 
+const MuiCard = ({ tConfig, type }) => {
+  const styles = useStyles();
+  return (
+    <Card className={[styles[type], styles.card].join(' ')}>
+      <CardContent>
+        <Typography align="center" {...tConfig[1].styles}>
+          <CountUp {...tConfig[1].cu_config} />
+        </Typography>
+        <Typography align="center" {...tConfig[0].styles}>
+          {tConfig[0].value}
+        </Typography>
+        {/* <Typography align="center" {...tConfig[2].styles}>
+          {tConfig[2].value}
+        </Typography> */}
+      </CardContent>
+      <Divider light />
+      <Box display="flex">
+        <Box p={2} flex="auto" className={styles.box}>
+          <Typography align="center" {...tConfig[3].label.styles}>
+            {tConfig[3].label.value}
+          </Typography>
+          <Typography align="center" {...tConfig[3].styles}>
+            {tConfig[3].value}
+          </Typography>
+        </Box>
+        <Divider
+          orientation="vertical"
+          flexItem
+          variant="middle"
+          style={{ margin: 0 }}
+        />
+        <Box p={2} flex="auto" className={styles.box}>
+          <Typography align="center" {...tConfig[4].label.styles}>
+            {tConfig[4].label.value}
+          </Typography>
+          <Typography align="center" {...tConfig[4].styles}>
+            {tConfig[4].value}
+          </Typography>
+        </Box>
+      </Box>
+    </Card>
+  );
+};
+
+MuiCard.propTypes = {
+  tConfig: PropTypes.array.isRequired,
+  type: PropTypes.string.isRequired
+};
+
+export default MuiCard;
+
+/*
 const MuiCard = ({ tConfig, type }) => {
   const styles = useStyles();
   return (
@@ -66,10 +127,4 @@ const MuiCard = ({ tConfig, type }) => {
     </Card>
   );
 };
-
-MuiCard.propTypes = {
-  tConfig: PropTypes.array.isRequired,
-  type: PropTypes.string.isRequired
-};
-
-export default MuiCard;
+*/

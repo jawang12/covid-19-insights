@@ -12,12 +12,19 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   container: {
-    margin: '50px 0 30px 0'
+    margin: '50px 0 30px 0',
+    [theme.breakpoints.between(768, 960)]: {
+      width: '85%'
+    },
+    [theme.breakpoints.up('md')]: {
+      width: '70%'
+    }
   },
   gridItem: {
     [theme.breakpoints.between('sm', 768)]: {
-      maxWidth: '60%',
-      flexBasis: '55%'
+      // maxWidth: '65%',
+      // flexBasis: '55%'
+      width: 'auto'
     }
   }
 }));
@@ -41,9 +48,9 @@ const Cards = (props) => {
 
   return (
     <div className={styles.container}>
-      <Grid container spacing={3} className={styles.root} justify="center">
+      <Grid container spacing={2} className={styles.root} justify="center">
         {Array.from({ length: amount }, (_, i) => (
-          <Grid item xs={9} sm={6} md={3} key={i} className={styles.gridItem}>
+          <Grid item xs={10} sm={6} md={4} key={i} className={styles.gridItem}>
             <MuiCard
               tConfig={typography[typographyKeys[i]]}
               type={typographyKeys[i]}
