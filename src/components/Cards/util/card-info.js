@@ -1,224 +1,227 @@
+import { numberWithCommas } from '../../../utils/numberWithCommas';
+
 export const cardInfo = ({
-  quantity,
-  updatedDate,
   confirmedGrowth,
   deathsGrowth,
-  recoveredGrowth
+  recoveredGrowth,
+  iMonthTotal,
+  iWeekTotal,
+  rMonthTotal,
+  rWeekTotal,
+  dMonthTotal,
+  dWeekTotal
 }) => ({
-  amount: quantity,
-  typography: {
-    infected: [
-      {
-        styles: {
-          variant: 'h5',
-          style: {
-            padding: '15px 0 15px 0',
-            fontWeight: 'bold'
-          }
-        },
-        value: confirmedGrowth,
-        cu_config: {
-          start: 0,
-          end: confirmedGrowth || 0,
-          delay: 0.3,
-          separator: ',',
-          duration: 4.7
+  infected: [
+    {
+      styles: {
+        variant: 'h5',
+        style: {
+          padding: '15px 0 15px 0',
+          fontWeight: 'bold'
         }
       },
-      {
-        value: 'Infected',
-        styles: {
-          fontSize: 12,
-          style: {
-            letterSpacing: '1.5px',
-            fontSize: '14px',
-            paddingBottom: '10px',
-            textTransform: 'uppercase',
-            color: 'blueviolet'
-          }
-        }
-      },
-      {
-        value: 'Weekly',
-        styles: {
-          style: {
-            textTransform: 'uppercase',
-            fontSize: '12px',
-            letterSpacing: '1.5px'
-          }
-        }
-      },
-      {
-        styles: {
-          style: {
-            fontWeight: 'bold',
-            paddingTop: '15px'
-          }
-        },
-        value: 100
-      },
-      {
-        value: 'Monthly',
-        styles: {
-          style: {
-            textTransform: 'uppercase',
-            fontSize: '12px',
-            letterSpacing: '1.5px'
-          }
-        }
-      },
-      {
-        styles: {
-          style: {
-            fontWeight: 'bold',
-            paddingTop: '15px'
-          }
-        },
-        value: 300
+      value: confirmedGrowth,
+      cu_config: {
+        start: 0,
+        end: confirmedGrowth || 0,
+        delay: 0.3,
+        separator: ',',
+        duration: 4.7
       }
-    ],
-    recovered: [
-      {
-        styles: {
-          variant: 'h5',
-          style: {
-            padding: '15px 0 15px 0',
-            fontWeight: 'bold'
-          }
-        },
-        value: recoveredGrowth,
-        cu_config: {
-          start: 0,
-          end: recoveredGrowth || 0,
-          delay: 0.3,
-          separator: ',',
-          duration: 2.5
+    },
+    {
+      value: 'Infected',
+      styles: {
+        fontSize: 12,
+        style: {
+          letterSpacing: '1.5px',
+          fontSize: '14px',
+          paddingBottom: '10px',
+          textTransform: 'uppercase',
+          color: 'blueviolet'
         }
-      },
-      {
-        value: 'Recovered',
-        styles: {
-          fontSize: 12,
-          style: {
-            letterSpacing: '1.5px',
-            fontSize: '14px',
-            paddingBottom: '10px',
-            color: 'darkgreen',
-            textTransform: 'uppercase'
-          }
-        }
-      },
-      {
-        value: 'Weekly',
-        styles: {
-          style: {
-            textTransform: 'uppercase',
-            fontSize: '12px',
-            letterSpacing: '1.5px'
-          }
-        }
-      },
-      {
-        styles: {
-          style: {
-            fontWeight: 'bold',
-            paddingTop: '15px'
-          }
-        },
-        value: 100
-      },
-      {
-        value: 'Monthly',
-        styles: {
-          style: {
-            textTransform: 'uppercase',
-            fontSize: '12px',
-            letterSpacing: '1.5px'
-          }
-        }
-      },
-      {
-        styles: {
-          style: {
-            fontWeight: 'bold',
-            paddingTop: '15px'
-          }
-        },
-        value: 300
       }
-    ],
-    deceased: [
-      {
-        styles: {
-          variant: 'h5',
-          style: {
-            padding: '15px 0 15px 0',
-            fontWeight: 'bold'
-          }
-        },
-        value: deathsGrowth,
-        cu_config: {
-          start: 0,
-          end: deathsGrowth || 0,
-          delay: 0.3,
-          separator: ',',
-          duration: 1.35
+    },
+    {
+      value: 'Weekly',
+      styles: {
+        style: {
+          textTransform: 'uppercase',
+          fontSize: '12px',
+          letterSpacing: '1.5px'
         }
-      },
-      {
-        value: 'Deceased',
-        styles: {
-          color: 'textSecondary',
-          fontSize: 12,
-          style: {
-            letterSpacing: '1.5px',
-            fontSize: '14px',
-            paddingBottom: '10px',
-            textTransform: 'uppercase',
-            color: 'crimson'
-          }
-        }
-      },
-      {
-        value: 'Weekly',
-        styles: {
-          style: {
-            textTransform: 'uppercase',
-            fontSize: '12px',
-            letterSpacing: '1.5px'
-          }
-        }
-      },
-      {
-        styles: {
-          style: {
-            fontWeight: 'bold',
-            paddingTop: '15px'
-          }
-        },
-        value: 100
-      },
-      {
-        value: 'Monthly',
-        styles: {
-          style: {
-            textTransform: 'uppercase',
-            fontSize: '12px',
-            letterSpacing: '1.5px'
-          }
-        }
-      },
-      {
-        styles: {
-          style: {
-            fontWeight: 'bold',
-            paddingTop: '15px'
-          }
-        },
-        value: 300
       }
-    ]
-  }
+    },
+    {
+      styles: {
+        style: {
+          fontWeight: 'bold',
+          paddingTop: '15px'
+        }
+      },
+      value: numberWithCommas(iWeekTotal) || 0
+    },
+    {
+      value: 'Monthly',
+      styles: {
+        style: {
+          textTransform: 'uppercase',
+          fontSize: '12px',
+          letterSpacing: '1.5px'
+        }
+      }
+    },
+    {
+      styles: {
+        style: {
+          fontWeight: 'bold',
+          paddingTop: '15px'
+        }
+      },
+      value: numberWithCommas(iMonthTotal) || 0
+    }
+  ],
+  recovered: [
+    {
+      styles: {
+        variant: 'h5',
+        style: {
+          padding: '15px 0 15px 0',
+          fontWeight: 'bold'
+        }
+      },
+      value: recoveredGrowth,
+      cu_config: {
+        start: 0,
+        end: recoveredGrowth || 0,
+        delay: 0.3,
+        separator: ',',
+        duration: 2.5
+      }
+    },
+    {
+      value: 'Recovered',
+      styles: {
+        fontSize: 12,
+        style: {
+          letterSpacing: '1.5px',
+          fontSize: '14px',
+          paddingBottom: '10px',
+          color: 'darkgreen',
+          textTransform: 'uppercase'
+        }
+      }
+    },
+    {
+      value: 'Weekly',
+      styles: {
+        style: {
+          textTransform: 'uppercase',
+          fontSize: '12px',
+          letterSpacing: '1.5px'
+        }
+      }
+    },
+    {
+      styles: {
+        style: {
+          fontWeight: 'bold',
+          paddingTop: '15px'
+        }
+      },
+      value: numberWithCommas(rWeekTotal) || 0
+    },
+    {
+      value: 'Monthly',
+      styles: {
+        style: {
+          textTransform: 'uppercase',
+          fontSize: '12px',
+          letterSpacing: '1.5px'
+        }
+      }
+    },
+    {
+      styles: {
+        style: {
+          fontWeight: 'bold',
+          paddingTop: '15px'
+        }
+      },
+      value: numberWithCommas(rMonthTotal) || 0
+    }
+  ],
+  deceased: [
+    {
+      styles: {
+        variant: 'h5',
+        style: {
+          padding: '15px 0 15px 0',
+          fontWeight: 'bold'
+        }
+      },
+      value: deathsGrowth,
+      cu_config: {
+        start: 0,
+        end: deathsGrowth || 0,
+        delay: 0.3,
+        separator: ',',
+        duration: 1.35
+      }
+    },
+    {
+      value: 'Deceased',
+      styles: {
+        color: 'textSecondary',
+        fontSize: 12,
+        style: {
+          letterSpacing: '1.5px',
+          fontSize: '14px',
+          paddingBottom: '10px',
+          textTransform: 'uppercase',
+          color: 'crimson'
+        }
+      }
+    },
+    {
+      value: 'Weekly',
+      styles: {
+        style: {
+          textTransform: 'uppercase',
+          fontSize: '12px',
+          letterSpacing: '1.5px'
+        }
+      }
+    },
+    {
+      styles: {
+        style: {
+          fontWeight: 'bold',
+          paddingTop: '15px'
+        }
+      },
+      value: numberWithCommas(dWeekTotal) || 0
+    },
+    {
+      value: 'Monthly',
+      styles: {
+        style: {
+          textTransform: 'uppercase',
+          fontSize: '12px',
+          letterSpacing: '1.5px'
+        }
+      }
+    },
+    {
+      styles: {
+        style: {
+          fontWeight: 'bold',
+          paddingTop: '15px'
+        }
+      },
+      value: numberWithCommas(dMonthTotal) || 0
+    }
+  ]
 });
 
 /*

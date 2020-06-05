@@ -4,6 +4,7 @@ import propTypes from 'prop-types';
 
 import SummaryCard from './Card/SummaryCard';
 import { cardInfo } from './util/card-info';
+import { totalsForCard } from '../../utils/totalsForCard';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,19 +30,38 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Cards = (props) => {
+const Cards = ({ data, quantity }) => {
   const styles = useStyles();
-  const {
-    data: { confirmedGrowth, deathsGrowth, updatedDate, recoveredGrowth },
-    quantity
-  } = props;
 
-  const { amount, typography } = cardInfo({
-    quantity,
-    updatedDate,
+  let confirmedGrowth;
+  let deathsGrowth;
+  let recoveredGrowth;
+
+  if (data.length) {
+    confirmedGrowth = data[data.length - 1].confirmedGrowth;
+    deathsGrowth = data[data.length - 1].deathsGrowth;
+    recoveredGrowth = data[data.length - 1].recoveredGrowth;
+  }
+
+  const {
+    iMonthTotal,
+    iWeekTotal,
+    rMonthTotal,
+    rWeekTotal,
+    dMonthTotal,
+    dWeekTotal
+  } = totalsForCard(data);
+
+  const typography = cardInfo({
     confirmedGrowth,
     deathsGrowth,
-    recoveredGrowth
+    recoveredGrowth,
+    iMonthTotal,
+    iWeekTotal,
+    rMonthTotal,
+    rWeekTotal,
+    dMonthTotal,
+    dWeekTotal
   });
 
   const typographyKeys = Object.keys(typography);
@@ -49,7 +69,7 @@ const Cards = (props) => {
   return (
     <div className={styles.container}>
       <Grid container spacing={2} className={styles.root} justify="center">
-        {Array.from({ length: amount }, (_, i) => (
+        {Array.from({ length: quantity }, (_, i) => (
           <Grid item xs={10} sm={6} md={4} key={i} className={styles.gridItem}>
             <SummaryCard
               tConfig={typography[typographyKeys[i]]}
@@ -63,12 +83,8 @@ const Cards = (props) => {
 };
 
 Cards.propTypes = {
-  data: propTypes.shape({
-    confirmed: propTypes.number,
-    deaths: propTypes.number,
-    recovered: propTypes.number,
-    updatedDate: propTypes.string
-  })
+  data: propTypes.array.isRequired,
+  quantity: propTypes.number.isRequired
 };
 
 export default Cards;

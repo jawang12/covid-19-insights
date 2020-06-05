@@ -33,8 +33,6 @@ const GlobalData = () => {
   const [data, setData] = useState({
     dailyReports: {},
     currentDailyReport: [],
-    card: {},
-    countryListData: {},
     filter: ''
   });
   const styles = useStyles();
@@ -48,7 +46,6 @@ const GlobalData = () => {
         dailyReports,
         currentDailyReport: dailyReports.Global,
         card: dailyReports.Global[dailyReports.Global.length - 1],
-        countryListData: dailyReports,
         filter: 'total'
       });
     })();
@@ -57,10 +54,6 @@ const GlobalData = () => {
   const handleCountryChange = useCallback((country) => {
     setData((previousData) => ({
       ...previousData,
-      card:
-        previousData.dailyReports[country][
-          previousData.dailyReports[country].length - 1
-        ],
       currentDailyReport: previousData.dailyReports[country]
     }));
   }, []);
@@ -96,9 +89,9 @@ const GlobalData = () => {
 
   return (
     <div className={styles.root}>
-      <Cards quantity={3} data={data.card} />
+      <Cards quantity={3} data={data.currentDailyReport.slice(-30)} />
       <CountryPicker
-        countryListData={data.countryListData}
+        countryListData={data.dailyReports}
         handleCountryChange={handleCountryChange}
       />
       <Grid
