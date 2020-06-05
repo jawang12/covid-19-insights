@@ -11,6 +11,7 @@ const useStyles = makeStyles({
   },
   button: {
     fontSize: '.7rem',
+    letterSpacing: '.5px',
     fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif'
   }
 });
