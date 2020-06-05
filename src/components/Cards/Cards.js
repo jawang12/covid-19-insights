@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
 import propTypes from 'prop-types';
 
-import MuiCard from './Card/MuiCard';
+import SummaryCard from './Card/SummaryCard';
 import { cardInfo } from './util/card-info';
 
 const useStyles = makeStyles((theme) => ({
@@ -51,7 +51,7 @@ const Cards = (props) => {
       <Grid container spacing={2} className={styles.root} justify="center">
         {Array.from({ length: amount }, (_, i) => (
           <Grid item xs={10} sm={6} md={4} key={i} className={styles.gridItem}>
-            <MuiCard
+            <SummaryCard
               tConfig={typography[typographyKeys[i]]}
               type={typographyKeys[i]}
             />

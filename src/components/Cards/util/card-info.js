@@ -9,20 +9,6 @@ export const cardInfo = ({
   typography: {
     infected: [
       {
-        value: 'Infected',
-        styles: {
-          fontSize: 12,
-          gutterBottom: true,
-          style: {
-            letterSpacing: '1.5px',
-            fontSize: '14px',
-            paddingBottom: '10px',
-            textTransform: 'uppercase',
-            color: 'rgba(126, 87, 194, .69)'
-          }
-        }
-      },
-      {
         styles: {
           variant: 'h5',
           style: {
@@ -40,66 +26,58 @@ export const cardInfo = ({
         }
       },
       {
-        value: updatedDate,
+        value: 'Infected',
         styles: {
-          color: 'textSecondary',
-          fontSize: 14
-        }
-      },
-      {
-        styles: {
-          style: {
-            fontWeight: 'bold',
-            paddingTop: '15px'
-          }
-        },
-        value: 100,
-        label: {
-          value: 'Weekly',
-          styles: {
-            style: {
-              textTransform: 'uppercase',
-              fontSize: '12px',
-              letterSpacing: '1.5px'
-            }
-          }
-        }
-      },
-      {
-        styles: {
-          style: {
-            fontWeight: 'bold',
-            paddingTop: '15px'
-          }
-        },
-        value: 300,
-        label: {
-          value: 'Monthly',
-          styles: {
-            style: {
-              textTransform: 'uppercase',
-              fontSize: '12px',
-              letterSpacing: '1.5px'
-            }
-          }
-        }
-      }
-    ],
-    recovered: [
-      {
-        value: 'Recovered',
-        styles: {
-          color: 'textSecondary',
           fontSize: 12,
-          gutterBottom: true,
           style: {
             letterSpacing: '1.5px',
             fontSize: '14px',
             paddingBottom: '10px',
-            textTransform: 'uppercase'
+            textTransform: 'uppercase',
+            color: 'blueviolet'
           }
         }
       },
+      {
+        value: 'Weekly',
+        styles: {
+          style: {
+            textTransform: 'uppercase',
+            fontSize: '12px',
+            letterSpacing: '1.5px'
+          }
+        }
+      },
+      {
+        styles: {
+          style: {
+            fontWeight: 'bold',
+            paddingTop: '15px'
+          }
+        },
+        value: 100
+      },
+      {
+        value: 'Monthly',
+        styles: {
+          style: {
+            textTransform: 'uppercase',
+            fontSize: '12px',
+            letterSpacing: '1.5px'
+          }
+        }
+      },
+      {
+        styles: {
+          style: {
+            fontWeight: 'bold',
+            paddingTop: '15px'
+          }
+        },
+        value: 300
+      }
+    ],
+    recovered: [
       {
         styles: {
           variant: 'h5',
@@ -118,66 +96,58 @@ export const cardInfo = ({
         }
       },
       {
-        value: updatedDate,
+        value: 'Recovered',
         styles: {
-          color: 'textSecondary',
-          fontSize: 14
-        }
-      },
-      {
-        styles: {
-          style: {
-            fontWeight: 'bold',
-            paddingTop: '15px'
-          }
-        },
-        value: 100,
-        label: {
-          value: 'Weekly',
-          styles: {
-            style: {
-              textTransform: 'uppercase',
-              fontSize: '12px',
-              letterSpacing: '1.5px'
-            }
-          }
-        }
-      },
-      {
-        styles: {
-          style: {
-            fontWeight: 'bold',
-            paddingTop: '15px'
-          }
-        },
-        value: 300,
-        label: {
-          value: 'Monthly',
-          styles: {
-            style: {
-              textTransform: 'uppercase',
-              fontSize: '12px',
-              letterSpacing: '1.5px'
-            }
-          }
-        }
-      }
-    ],
-    deceased: [
-      {
-        value: 'Deceased',
-        styles: {
-          color: 'textSecondary',
           fontSize: 12,
-          gutterBottom: true,
           style: {
             letterSpacing: '1.5px',
             fontSize: '14px',
             paddingBottom: '10px',
+            color: 'darkgreen',
             textTransform: 'uppercase'
           }
         }
       },
+      {
+        value: 'Weekly',
+        styles: {
+          style: {
+            textTransform: 'uppercase',
+            fontSize: '12px',
+            letterSpacing: '1.5px'
+          }
+        }
+      },
+      {
+        styles: {
+          style: {
+            fontWeight: 'bold',
+            paddingTop: '15px'
+          }
+        },
+        value: 100
+      },
+      {
+        value: 'Monthly',
+        styles: {
+          style: {
+            textTransform: 'uppercase',
+            fontSize: '12px',
+            letterSpacing: '1.5px'
+          }
+        }
+      },
+      {
+        styles: {
+          style: {
+            fontWeight: 'bold',
+            paddingTop: '15px'
+          }
+        },
+        value: 300
+      }
+    ],
+    deceased: [
       {
         styles: {
           variant: 'h5',
@@ -196,10 +166,27 @@ export const cardInfo = ({
         }
       },
       {
-        value: updatedDate,
+        value: 'Deceased',
         styles: {
           color: 'textSecondary',
-          fontSize: 14
+          fontSize: 12,
+          style: {
+            letterSpacing: '1.5px',
+            fontSize: '14px',
+            paddingBottom: '10px',
+            textTransform: 'uppercase',
+            color: 'crimson'
+          }
+        }
+      },
+      {
+        value: 'Weekly',
+        styles: {
+          style: {
+            textTransform: 'uppercase',
+            fontSize: '12px',
+            letterSpacing: '1.5px'
+          }
         }
       },
       {
@@ -209,15 +196,15 @@ export const cardInfo = ({
             paddingTop: '15px'
           }
         },
-        value: 100,
-        label: {
-          value: 'Weekly',
-          styles: {
-            style: {
-              textTransform: 'uppercase',
-              fontSize: '12px',
-              letterSpacing: '1.5px'
-            }
+        value: 100
+      },
+      {
+        value: 'Monthly',
+        styles: {
+          style: {
+            textTransform: 'uppercase',
+            fontSize: '12px',
+            letterSpacing: '1.5px'
           }
         }
       },
@@ -228,17 +215,7 @@ export const cardInfo = ({
             paddingTop: '15px'
           }
         },
-        value: 300,
-        label: {
-          value: 'Monthly',
-          styles: {
-            style: {
-              textTransform: 'uppercase',
-              fontSize: '12px',
-              letterSpacing: '1.5px'
-            }
-          }
-        }
+        value: 300
       }
     ]
   }
