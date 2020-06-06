@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     padding: '0 5%',
     textAlign: 'center',
-    height: '90px',
+    height: '5rem',
     backgroundColor: theme.palette.primary.main,
     [theme.breakpoints.down(theme.breakpoints.values.tablet)]: {
       flexDirection: 'column',

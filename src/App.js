@@ -1,11 +1,13 @@
 import React from 'react';
 import { GlobalData } from './containers';
-import { Footer } from './components';
+import { Footer, Navbar } from './components';
 
 const App = () => {
   return (
     <>
-      <header></header>
+      <header>
+        <Navbar />
+      </header>
       <main>
         <GlobalData />
       </main>
