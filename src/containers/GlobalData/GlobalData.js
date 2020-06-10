@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
-import { Cards, CountryPicker, Chart } from '../../components';
+import { Cards, CountryPicker, Chart, Title } from '../../components';
 import { fetchDailyReports } from '../../api';
 import { makeStyles, Grid } from '@material-ui/core';
 import { orderByCountry } from '../../utils/orderByCountry';
@@ -45,7 +45,6 @@ const GlobalData = () => {
       setData({
         dailyReports,
         currentDailyReport: dailyReports.Global,
-        card: dailyReports.Global[dailyReports.Global.length - 1],
         filter: 'total'
       });
     })();
@@ -89,6 +88,7 @@ const GlobalData = () => {
 
   return (
     <div className={styles.root}>
+      <Title name="Daily Reports" dailyReport={data.currentDailyReport} />
       <Cards quantity={3} data={data.currentDailyReport.slice(-30)} />
       <CountryPicker
         countryListData={data.dailyReports}

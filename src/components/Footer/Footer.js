@@ -5,7 +5,7 @@ import { faReact } from '@fortawesome/free-brands-svg-icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: '130px',
+    marginTop: '100px',
     alignItems: 'center',
     padding: '0 5%',
     textAlign: 'center',

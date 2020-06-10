@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   container: {
-    margin: '50px 0 30px 0',
+    margin: '20px 0 30px',
     [theme.breakpoints.between(768, 960)]: {
       width: '85%'
     },

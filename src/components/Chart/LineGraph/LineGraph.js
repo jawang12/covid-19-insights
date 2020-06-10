@@ -42,17 +42,6 @@ const LineGraph = ({ country, dailyData, size, config, toggle, tState }) => {
   const zeroLineDashLG = useMediaQuery('(max-width: 496px)');
   const zeroLineDashSM = useMediaQuery('(min-width: 600px)');
 
-  // const adjustZeroLine = (size) => {
-  //   console.log(size);
-  //   if (size >= 10) {
-  //     return zeroLineDashLG ? [8, 3] : false;
-
-  //     return false;
-  //   } else {
-  //     return zeroLineDashSM ? [8, 3] : false;
-  //   }
-  // };
-
   /* M-UI breakpoints.down() does not work on custom breakpoint keys. will send pull request
   const tabletOrSmaller = useMediaQuery('(max-width: 768px)'); 
 
@@ -125,8 +114,10 @@ const LineGraph = ({ country, dailyData, size, config, toggle, tState }) => {
                   borderDash: [8, 3],
                   // zeroLineWidth: zeroLineDash ? 1 : 1.5,
                   zeroLineColor: 'rgba(0, 0, 0, 0.1)',
-
-                  zeroLineBorderDash: zeroLineDashLG ? [8, 3] : false
+                  zeroLineBorderDash:
+                    size > 9
+                      ? (zeroLineDashLG && [8, 3]) || false
+                      : (zeroLineDashSM && [8, 3]) || false
                 },
                 type: 'time',
                 ticks: {
