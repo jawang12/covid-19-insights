@@ -3,8 +3,9 @@ import { Line } from 'react-chartjs-2';
 import { Grid, Card, makeStyles, useMediaQuery } from '@material-ui/core';
 import { numberWithCommas } from '../../../utils/numberWithCommas';
 import { Chart } from 'react-chartjs-2';
-import 'chartjs-plugin-crosshair';
 import GPDtoggle from '../../ButtonGroup/GPDtoggle';
+import 'chartjs-plugin-crosshair';
+import 'chartjs-plugin-deferred';
 
 Chart.Legend.prototype.afterFit = function () {
   this.height = this.height + 10;
@@ -38,7 +39,19 @@ const useStyles = (size, config) =>
 const LineGraph = ({ country, dailyData, size, config, toggle, tState }) => {
   const classes = useStyles(size, config)();
   // address bug where zero line on y axis would protrude into graph
-  const zeroLineDash = useMediaQuery('(max-width: 496px)');
+  const zeroLineDashLG = useMediaQuery('(max-width: 496px)');
+  const zeroLineDashSM = useMediaQuery('(min-width: 600px)');
+
+  // const adjustZeroLine = (size) => {
+  //   console.log(size);
+  //   if (size >= 10) {
+  //     return zeroLineDashLG ? [8, 3] : false;
+
+  //     return false;
+  //   } else {
+  //     return zeroLineDashSM ? [8, 3] : false;
+  //   }
+  // };
 
   /* M-UI breakpoints.down() does not work on custom breakpoint keys. will send pull request
   const tabletOrSmaller = useMediaQuery('(max-width: 768px)'); 
@@ -113,7 +126,7 @@ const LineGraph = ({ country, dailyData, size, config, toggle, tState }) => {
                   // zeroLineWidth: zeroLineDash ? 1 : 1.5,
                   zeroLineColor: 'rgba(0, 0, 0, 0.1)',
 
-                  zeroLineBorderDash: zeroLineDash ? [8, 3] : false
+                  zeroLineBorderDash: zeroLineDashLG ? [8, 3] : false
                 },
                 type: 'time',
                 ticks: {
@@ -144,6 +157,10 @@ const LineGraph = ({ country, dailyData, size, config, toggle, tState }) => {
               zoom: {
                 enabled: false
               }
+            },
+            deferred: {
+              yOffset: '60%',
+              delay: 300
             }
           },
           responsive: true,

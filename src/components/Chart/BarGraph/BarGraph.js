@@ -2,6 +2,7 @@ import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Grid, Card, makeStyles } from '@material-ui/core';
 import { numberWithCommas } from '../../../utils/numberWithCommas';
+import 'chartjs-plugin-deferred';
 
 const useStyles = (size) =>
   makeStyles((theme) => {
@@ -122,7 +123,11 @@ const BarGraph = ({
             }
           },
           plugins: {
-            crosshair: false
+            crosshair: false,
+            deferred: {
+              yOffset: '60%',
+              delay: 300
+            }
           },
           responsive: true,
           maintainAspectRatio: false

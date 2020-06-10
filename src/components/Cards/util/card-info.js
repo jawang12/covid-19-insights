@@ -113,7 +113,7 @@ export const cardInfo = ({
       }
     },
     {
-      value: 'Weekly',
+      value: 'Last 7',
       styles: {
         style: {
           textTransform: 'uppercase',
@@ -132,7 +132,7 @@ export const cardInfo = ({
       value: numberWithCommas(rWeekTotal) || 0
     },
     {
-      value: 'Monthly',
+      value: 'Last 30',
       styles: {
         style: {
           textTransform: 'uppercase',
@@ -184,7 +184,7 @@ export const cardInfo = ({
       }
     },
     {
-      value: 'Weekly',
+      value: 'Last 7',
       styles: {
         style: {
           textTransform: 'uppercase',
@@ -203,7 +203,7 @@ export const cardInfo = ({
       value: numberWithCommas(dWeekTotal) || 0
     },
     {
-      value: 'Monthly',
+      value: 'Last 30',
       styles: {
         style: {
           textTransform: 'uppercase',
