@@ -151,7 +151,7 @@ const LineGraph = ({ country, dailyData, size, config, toggle, tState }) => {
             },
             deferred: {
               yOffset: '60%',
-              delay: 300
+              delay: 100
             }
           },
           responsive: true,

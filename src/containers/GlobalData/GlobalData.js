@@ -1,9 +1,7 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import { Cards, CountryPicker, Chart, Title } from '../../components';
-import { fetchDailyReports } from '../../api';
 import { makeStyles, Grid } from '@material-ui/core';
-import { orderByCountry } from '../../utils/orderByCountry';
 import { graphConfig } from './utils/graph-config';
 
 const useStyles = makeStyles((theme) => ({
@@ -29,14 +27,18 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const GlobalData = () => {
+const GlobalData = ({ resource }) => {
+  const initialState = resource.reports.read();
+  const [data, setData] = useState(initialState);
+  const styles = useStyles();
+
+  /* without react suspense
   const [data, setData] = useState({
     dailyReports: {},
     currentDailyReport: [],
     filter: ''
   });
-  const styles = useStyles();
-
+    
   useEffect(() => {
     (async function () {
       const reports = await fetchDailyReports();
@@ -49,6 +51,7 @@ const GlobalData = () => {
       });
     })();
   }, []);
+  */
 
   const handleCountryChange = useCallback((country) => {
     setData((previousData) => ({

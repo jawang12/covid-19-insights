@@ -19,7 +19,8 @@ const useStyles = makeStyles({
   },
   title: {
     flexGrow: 1,
-    letterSpacing: '.14rem'
+    letterSpacing: '.14rem',
+    color: '#f3f1e0'
   },
   github: {
     cursor: 'pointer',
