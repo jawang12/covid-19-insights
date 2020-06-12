@@ -36,7 +36,7 @@ const useStyles = makeStyles({
   }
 });
 
-const Navbar = () => {
+const Titlebar = () => {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -72,4 +72,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Titlebar;

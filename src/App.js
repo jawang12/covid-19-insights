@@ -1,27 +1,30 @@
 import React, { Suspense } from 'react';
 import { GlobalData } from './containers';
-import { Footer, Navbar } from './components';
+import { Footer, Titlebar, Spinner } from './components';
 import { suspenseFetchDailyReports } from './api/suspenseApi';
 import { ErrorBoundary } from './components/';
+import classes from './App.module.css';
 
 const resource = suspenseFetchDailyReports();
 
-const App = () => (
-  <>
-    <header>
-      <Navbar />
-    </header>
-    <main>
-      <Suspense fallback={<h2>Loooaaadinggg......</h2>}>
-        <ErrorBoundary>
-          <GlobalData resource={resource} />
-        </ErrorBoundary>
+const App = () => {
+  return (
+    <div className={classes.Container}>
+      <header>
+        <Titlebar />
+      </header>
+      <Suspense fallback={<Spinner />}>
+        <main>
+          <ErrorBoundary>
+            <GlobalData resource={resource} />
+          </ErrorBoundary>
+        </main>
+        <footer>
+          <Footer />
+        </footer>
       </Suspense>
-    </main>
-    <footer>
-      <Footer />
-    </footer>
-  </>
-);
+    </div>
+  );
+};
 
 export default App;

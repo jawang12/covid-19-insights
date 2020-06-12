@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   container: {
-    margin: '0px 0 30px',
+    margin: '20px 0 30px',
     [theme.breakpoints.between(768, 960)]: {
       width: '85%'
     },
@@ -33,16 +33,16 @@ const useStyles = makeStyles((theme) => ({
 const Cards = ({ data, quantity }) => {
   const styles = useStyles();
 
-  let confirmedGrowth;
-  let deathsGrowth;
-  let recoveredGrowth;
-
-  // with suspense, data.length check is no longer necessary
+  /* with suspense, data.length check is no longer necessary
   if (data.length) {
     confirmedGrowth = data[data.length - 1].confirmedGrowth;
     deathsGrowth = data[data.length - 1].deathsGrowth;
     recoveredGrowth = data[data.length - 1].recoveredGrowth;
   }
+  */
+  const confirmedGrowth = data[data.length - 1].confirmedGrowth;
+  const deathsGrowth = data[data.length - 1].deathsGrowth;
+  const recoveredGrowth = data[data.length - 1].recoveredGrowth;
 
   const {
     iMonthTotal,
